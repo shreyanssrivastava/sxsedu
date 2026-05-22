@@ -1,5 +1,4 @@
 import admin from "firebase-admin";
-import emailjs from "@emailjs/nodejs";
 
 if (!admin.apps.length) {
   admin.initializeApp({
@@ -21,6 +20,7 @@ export default async function handler(req, res) {
 
     const link = await admin.auth().generateEmailVerificationLink(email);
 
+/*
     await emailjs.send('service_mscgy1w', 'template_93hkrns',
       {
         userEmail: email,
@@ -31,6 +31,28 @@ export default async function handler(req, res) {
         privateKey: process.env.EMAILJS_PRV_KEY_SS3,
       }
     );
+*/   
+    
+    const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        service_id: 'service_mscgy1w',
+        template_id: 'template_93hkrns',
+        user_id: process.env.EMAILJS_PBL_KEY_SS3,
+        accessToken: process.env.EMAILJS_PRV_KEY_SS3,
+        template_params: {
+          userEmail: email,
+          verifyLink: link,
+        },
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Email sending failed!");
+    }
 
     res.status(200).json({ success: true });
   } catch (error) {
