@@ -493,19 +493,19 @@ complexQuery();
     }
   });
   
+  // Calling api to verify user email ↓
   
-/*  
-  fetch("https://sxsedu.vercel.app/api/getLink.js")
-  .then(res => res.json())
-  .then(data => {
-    console.log(data);
-    alert(data.message);
-  })
-  .catch((error) => {
-      alert(error);
-  });
-*/
- 
+  function verifyEmail(mail) {
+    fetch("https://sxsedu.vercel.app/api/verifyEmail", {
+      method: "POST",
+      body: JSON.stringify({ email: mail })
+    })
+    .then(res => res.json())
+    .then(data => console.log(JSON.stringify(data)))
+    .catch((error) => {
+        console.error(error);
+    });
+  }
  
   // Getting params from url ↓
   
@@ -810,8 +810,8 @@ function handleAuthError(error) {
           const user = userCredential.user;
           const name = signName.value.trim();
           await updateProfile(user, { displayName: name });      
-          await sendEmailVerification(user);       
-          signStatus.textContent = "Verification link sent! Please check your email and verify your account before logging in.";
+          await verifyEmail(email);
+          signStatus.textContent = "Verification link sent! Please check your email and verify your account before logging in."; 
           signOut(auth);
           setTimeout(() => {
             window.location.replace('index.html?mode=login');
