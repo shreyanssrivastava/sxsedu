@@ -17,12 +17,13 @@ export default async function handler(req, res) {
   
   try {
   
-    const { email, action } = JSON.parse(req.body);
-
+    const { email, action } = req.body;
+    let link;
+    
     if (action === 'verify') {
-        const link = await admin.auth().generateEmailVerificationLink(email);
+        link = await admin.auth().generateEmailVerificationLink(email);
     } else if (action === 'reset') {
-        const link = await admin.auth().generatePasswordResetLink(email);
+        link = await admin.auth().generatePasswordResetLink(email);
     } else {
         return res.status(400).json({ error: "Invalid request!" });
     }
