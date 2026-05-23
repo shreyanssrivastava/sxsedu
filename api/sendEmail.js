@@ -16,23 +16,17 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type"); 
   
   try {
-    const { email } = JSON.parse(req.body);
+  
+    const { email, action } = JSON.parse(req.body);
 
-    const link = await admin.auth().generateEmailVerificationLink(email);
-
-/*
-    await emailjs.send('service_mscgy1w', 'template_93hkrns',
-      {
-        userEmail: email,
-        verifyLink: link,
-      },
-      {
-        publicKey: process.env.EMAILJS_PBL_KEY_SS3,
-        privateKey: process.env.EMAILJS_PRV_KEY_SS3,
-      }
-    );
-*/   
-    
+    if (action === 'verify') {
+        const link = await admin.auth().generateEmailVerificationLink(email);
+    } else if (action === 'reset') {
+        const link = await admin.auth().generatePasswordResetLink(email);
+    } else {
+        return res.status(400).json({ error: "Invalid request!" });
+    }
+   
     const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
       method: "POST",
       headers: {
@@ -45,7 +39,7 @@ export default async function handler(req, res) {
         accessToken: process.env.EMAILJS_PRV_KEY_SS3,
         template_params: {
           userEmail: email,
-          verifyLink: link,
+          actionLink: link,
         },
       }),
     });
