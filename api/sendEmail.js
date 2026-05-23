@@ -17,7 +17,8 @@ export default async function handler(req, res) {
   
   try {
   
-    const { email, action } = req.body;
+    const { email, action } = JSON.parse(req.body);
+  
     let link;
     
     if (action === 'verify') {
