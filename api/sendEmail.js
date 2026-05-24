@@ -18,15 +18,13 @@ export default async function handler(req, res) {
   try {
   
     const { email, action } = JSON.parse(req.body);
-  
+    
     let link;
     
     if (action === 'verify') {
         link = await admin.auth().generateEmailVerificationLink(email);
     } else if (action === 'reset') {
         link = await admin.auth().generatePasswordResetLink(email);
-    } else {
-        return res.status(400).json({ error: "Invalid request!" });
     }
    
     const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
@@ -35,7 +33,7 @@ export default async function handler(req, res) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        service_id: 'service_mscgy1w',
+        service_id: process.env.EMAILJS_SERVICE_ID,
         template_id: 'template_93hkrns',
         user_id: process.env.EMAILJS_PBL_KEY_SS3,
         accessToken: process.env.EMAILJS_PRV_KEY_SS3,
@@ -56,4 +54,3 @@ export default async function handler(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-
