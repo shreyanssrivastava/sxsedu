@@ -19,11 +19,14 @@ export default async function handler(req, res) {
   
     const { email, action } = JSON.parse(req.body);
     
+    let tempId;
     let link;
     
     if (action === 'verify') {
+        tempId = process.env.EMAILJS_TL_ID + "2";
         link = await admin.auth().generateEmailVerificationLink(email);
     } else if (action === 'reset') {
+        tempId = process.env.EMAILJS_TL_ID + "1";
         link = await admin.auth().generatePasswordResetLink(email);
     }
    
@@ -34,7 +37,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         service_id: process.env.EMAILJS_SERVICE_ID,
-        template_id: 'template_93hkrns',
+        template_id: tempId,
         user_id: process.env.EMAILJS_PBL_KEY_SS3,
         accessToken: process.env.EMAILJS_PRV_KEY_SS3,
         template_params: {
