@@ -495,15 +495,21 @@ complexQuery();
   
   // Calling api to verify user email ↓
   
-  function verifyEmail(mail) {
-    fetch("https://sxsedu.vercel.app/api/verifyEmail", {
+  function sendEmail(mail, task) {
+    return fetch("https://sxsedu.vercel.app/api/sendEmail", {
       method: "POST",
-      body: JSON.stringify({ email: mail })
+      body: JSON.stringify({ email: mail, action: task }),
     })
-    .then(res => res.json())
+    .then((res) => {
+      if (!res.ok) {
+          throw new Error("server error: " + res.status);
+      }      
+      return res.json();
+    })
     .then(data => console.log(JSON.stringify(data)))
     .catch((error) => {
-        console.error(error);
+        throw error;
+        console.error(error);                
     });
   }
  
@@ -624,15 +630,16 @@ complexQuery();
   });
    
   resetPwBtn.addEventListener('click', () => {
-    sendPasswordResetEmail(auth, fgEmail.value)
+    sendEmail(fgEmail.value, 'reset')
     .then(() => {
-       fgStatus.textContent = 'Password reset link sent! Check your email to reset your password.';
-       setTimeout(() => {
-           window.location.replace('index.html?mode=login');
-       }, 2000);
+      fgStatus.textContent = 'Password reset link sent! Check your email to reset your password.';
+      setTimeout(() => {
+          window.location.replace('index.html?mode=login');
+      }, 2000);
     })
     .catch((error) => {
         fgStatus.textContent = handleAuthError(error);
+        console.error(error);
     });
   });
   
@@ -806,16 +813,16 @@ function handleAuthError(error) {
   
   async function signUpUser(email, password) {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-          const user = userCredential.user;
-          const name = signName.value.trim();
-          await updateProfile(user, { displayName: name });      
-          await verifyEmail(email);
-          signStatus.textContent = "Verification link sent! Please check your email and verify your account before logging in."; 
-          signOut(auth);
-          setTimeout(() => {
-            window.location.replace('index.html?mode=login');
-          }, 2000);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        const name = signName.value.trim();
+        await updateProfile(user, { displayName: name });      
+        await sendEmail(email, 'verify');
+        signStatus.textContent = "Verification link sent! Please check your email and verify your account before logging in."; 
+        signOut(auth);
+        setTimeout(() => {
+          window.location.replace('index.html?mode=login');
+        }, 2000);
     } catch (error) {
         signStatus.textContent = handleAuthError(error);
     }
