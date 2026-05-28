@@ -55,7 +55,7 @@ export default async function handler(req, res) {
 
     res.status(200).json({ success: true });
   } catch (error) {
-      if (error.message.includes(atob("bm8gdXNlciByZWNvcmQ"))) {
+      if (error.message.includes(process.env.sendEmail_ERORR_EXCEPTION)) {
           res.status(200).json({ success: true });
       } else {
           res.status(500).json({ error: error.message });
