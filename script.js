@@ -500,16 +500,15 @@ complexQuery();
       method: "POST",
       body: JSON.stringify({ email: mail, action: task }),
     })
-    .then((res) => {
-      if (!res.ok) {
-          throw new Error("server error: " + res.status);
-      }      
-      return res.json();
-    })
-    .then(data => console.log(JSON.stringify(data)))
+    .then(res =>
+      res.json().then(data => {   
+        if (!res.ok) {
+            throw new Error(data.error);
+        }
+      console.log(JSON.stringify(data));
+    }))
     .catch((error) => {
-        throw error;
-        console.error(error);                
+        throw error;             
     });
   }
  
@@ -632,7 +631,7 @@ complexQuery();
   resetPwBtn.addEventListener('click', () => {
     sendEmail(fgEmail.value, 'reset')
     .then(() => {
-      fgStatus.textContent = 'Password reset link sent! Check your email to reset your password.';
+      fgStatus.textContent = 'If an account with that email exists, we’ve sent a password reset link.';
       setTimeout(() => {
           window.location.replace('index.html?mode=login');
       }, 2000);
@@ -740,7 +739,7 @@ function handleAuthError(error) {
     if (errorMessage.includes("email-already-in-use")) {
         return "This email is already registered. Try logging in instead.";
     }
-    if (errorMessage.includes("invalid-email")) {
+    if (errorMessage.includes("invalid-email") || errorMessage.includes("email address is improperly formatted")) {
         return "Invalid email format. Please enter a valid email.";
     }
     if (errorMessage.includes("invalid-credential")) {
