@@ -1,7 +1,3 @@
-              /*---- Porting ----
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-   */  
                 /*---- Home navigation & account checkup ----*/
 document.addEventListener('DOMContentLoaded', () => {
   document.body.style.display = 'flex';
@@ -15,28 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-/*  
-    const firebaseConfig = {
-    apiKey: "AIzaSyDjcYwQSstXZPf3ratDeYHJvgYiLdpc4JU",
-    authDomain: "sxs-education.firebaseapp.com",
-    projectId: "sxs-education",
-    storageBucket: "sxs-education.firebasestorage.app",
-    messagingSenderId: "688203518667",
-    appId: "1:688203518667:web:b19d0f7bed2a569f02814e",
-    measurementId: "G-71ZY8YPJSW"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-    onAuthStateChanged(auth, (user) => {
-        if (!user) {
-            window.location.href = 'index.html?mode=login';
-        } else {
-            document.body.style.display = 'flex';
-        }
-    });
-*/
 });
 
             /*---- Rating system ----*/
@@ -95,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
               /*---- feedback submission ----*/
 document.addEventListener('DOMContentLoaded', () => {
-  const pk = "V2lqYkJ2S0EzaVM1bzNzZXo=";
+  const pk = "X0R4eF9ReGNCNFBmZ0ZHU0I";
   const form = document.getElementById('form');
   const inputFields = form.querySelectorAll('input, select, textarea');
   const sName = document.getElementById('inp_s_name');
@@ -155,21 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   validateOnInput();
- /* 
-  const names = [sName, pName];
-  
-  names.forEach((name) => {
-    name.addEventListener('input', function () {
-      const value = this.value;
-      const words = value.split(' ');
-      const capitalizedWords = words.map(word => {
-        return word.length > 0 ? word.charAt(0).toUpperCase() + word.slice(1).toLowerCase() : '';
-      });
 
-      this.value = capitalizedWords.join(' ');
-    });
-  });
-  */
   fbText.addEventListener('input', function () {
     let fbLength = this.value.length;
     fbChar.textContent = `${fbLength} / 250`;
@@ -249,11 +209,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
   function sendFeedback() {
     const fullSName = sName.value.trim();
- //   const finSname = fullSName.split(' ')[0] || 'User';  
     const fullPName = pName.value.trim();
-  //  const finPname = fullPName.split(' ')[0] || 'User';
     const fullTName = tName.value.trim();
-  //  const finTname = fullTName.split(' ')[0] || 'User';
     const allNames = `${fullSName}-${fullPName}-${fullTName}`;
     const mob = mobInput.value.trim() || 'N/A';
     const email = emailInput.value.trim() || 'N/A';
@@ -272,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
       feedback: fb
     };
 
-    emailjs.send('service_5y2g7ri', 'template_5339xhl', templateParams)
+    emailjs.send('sxs_gmail_service', 'sxs_gmail_t1', templateParams)
       .then((response) => {
         console.log('Success:', response);
         successBox.style.display = 'grid';

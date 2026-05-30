@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
               /*---- feedback submission ----*/
 document.addEventListener('DOMContentLoaded', () => {
-  const pk = "V2lqYkJ2S0EzaVM1bzNzZXo=";
+  const pk = "X0R4eF9ReGNCNFBmZ0ZHU0I";
   const form = document.getElementById('form');
   const inputFields = form.querySelectorAll('input, select, textarea');
   const nameInput = document.getElementById('inp_name');
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
       feedback: fb
     };
 
-    emailjs.send('service_5y2g7ri', 'template_5339xhl', templateParams)
+    emailjs.send('sxs_gmail_service', 'sxs_gmail_t1', templateParams)
       .then((response) => {
         console.log('Success:', response);
         successBox.style.display = 'grid';
