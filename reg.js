@@ -5,6 +5,7 @@
      
             /*---- initial content loading ----*/
 document.addEventListener('DOMContentLoaded', () => {
+ 
   const pageC = document.getElementById('page-content');
   const pageSk = document.getElementById('page-sk');
   const minT = 1000;
@@ -15,10 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
       pageC.style.opacity = '1';
       pageSk.style.display = 'none';
     }, pageLoadT);
-});
 
               /*---- Home navigation & account checkup ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const home = document.getElementById('home');
     home.addEventListener('click', () => {
       if (document.referrer.includes('index.html')) {
@@ -40,6 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  
+    let currentUser = null;
 
     onAuthStateChanged(auth, (user) => {
         if (!user) {
@@ -47,12 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = `index.html?mode=login&ref=${encodeURIComponent(btoa(currentPage))}`;
         } else {
             document.body.style.display = 'flex';
+            currentUser = user;
         }
     });
-});
-
+    
              /*---- Step marking ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const stepBox = document.getElementById('step-box');
   const arrowBtn = document.getElementById('arrow-btn');
   const arrow = document.getElementById('arrow');
@@ -96,10 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   updateSteps();
-});
 
          /*-- instruction check button --*/
-document.addEventListener('DOMContentLoaded', () => {
   const instructionCheckBtn = document.getElementById('instruction_check_btn');
   const startDisabledBtn = document.getElementById('start-disabled-btn');
   const checkboxError = document.querySelector('.checkbox-error');
@@ -124,19 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
       instructionCheckBtn.classList.add('invalid');
     }
   });
-});
 
        /*-- container's buttons function --*/
-document.addEventListener('DOMContentLoaded', () => {
-
  //   const welcomeBox = document.getElementById('welcome-box');
     const giContainer = document.getElementById('g_i_container');
     const loading = document.getElementById('loading-bg');
     const formParentContainer = document.querySelector('.container');
     const scrollBox = document.getElementById('scroll-box');
-    const instructionCheckBtn = document.getElementById('instruction_check_btn');
-    const startDisabledBtn = document.getElementById('start-disabled-btn');
-    const checkboxError = document.querySelector('.checkbox-error');
     const formStartBtn = document.querySelector('.form-start-btn');
     const giBtn = document.querySelector('.gi-btn');
     const captchaInput = document.getElementById('inp_captcha');
@@ -205,7 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }, { once: true });
     });
-});
 
          /*---- Object's initial animation ----*/
   function objectShowingAnimation() {
@@ -247,7 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
             /*---- Academic session ----*/
-document.addEventListener('DOMContentLoaded', () => {
     function updateSession() {
         const today = new Date();
         const year = today.getFullYear();
@@ -265,10 +255,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateSession();
-});
 
           /*---- Input-floatation ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const inputs = document.querySelectorAll('input');
     
   inputs.forEach((input) => {
@@ -284,10 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-});
 
          /*---- Make inputs sensible ----*/
-document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('input').forEach(input => {
     input.setAttribute('spellcheck', 'false');
     input.setAttribute('autocomplete', 'off');
@@ -310,7 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
       this.value = this.value.replace(/\s+/g, '');
     });
   });
-});
 
      /*---- Onclick enter btn in form ----*/
 document.addEventListener('keydown', function(event) {
@@ -371,7 +356,6 @@ document.addEventListener('keydown', function(event) {
   }
 
            /*---- Dob functions ----*/
-document.addEventListener("DOMContentLoaded", () => {
   const inp = document.getElementById('inp_student_dob');
   const fl = document.querySelector('.dob-fl');
   const ol = document.querySelector('.dob-ol'); 
@@ -399,12 +383,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const alertMsg = "To select date of birth, please click in blank area or on arrow.";
     showAlert(alertBox, alertMsg, "warning");
   });
-});
 
     /*---- Onclick span over select field ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const selectFields = document.querySelectorAll('.select-fields');
-  const alertBox = document.getElementById('alert-box');
 
   selectFields.forEach(field => {
     const label = field.querySelector('label');
@@ -417,12 +398,8 @@ document.addEventListener('DOMContentLoaded', () => {
       showAlert(alertBox, alertMsg, "warning");
     });
   });
-});
 
       /*---- Select element functions ----*/
-document.addEventListener('DOMContentLoaded', () => {
-  const selectFields = document.querySelectorAll('.select-fields');
-
   selectFields.forEach(field => {
     const label = field.querySelector('label');
     const select = field.querySelector('select');
@@ -446,33 +423,35 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-});
 
           /*---- Fetch City & State ----*/
         
-let pincodeIsValid = false;
-
-function getCityState() {
-  const pincode = document.getElementById('inp_pincode').value;
+  let pincodeIsValid = false;
   const pincodeField = document.getElementById('inp_pincode');
   const cityField = document.getElementById('inp_city');
   const stateField = document.getElementById('inp_state');
   const errorIcon = document.getElementById('error-icon');
   const errorMsg = document.getElementById('error');
-    
+
+function getCityState() {
+    const pincode = pincodeField.value;
     cityField.value = '';
     stateField.value = '';
     errorIcon.style.display = 'none';
     errorMsg.style.display = 'none';
 
     if (pincode.length === 6) {
-        fetch(`https://api.postalpincode.in/pincode/${pincode}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data[0].Status === "Success") {
-                    const postOffice = data[0].PostOffice[0];
-                    cityField.value = postOffice.District;
-                    stateField.value = postOffice.State;
+       //  fetch(`https://api.postalpincode.in/pincode/${pincodeField.value}`)
+      fetch("https://sxsedu.vercel.app/api/pincode", {
+        method: "POST",
+        body: JSON.stringify({ code: pincode }),
+      })
+            .then(res =>
+                res.json().then(data => {
+                if (res.ok) {
+                //    const postOffice = data[0].PostOffice[0];
+                    cityField.value = data.city;
+                    stateField.value = data.state;
                     pincodeField.classList.remove('invalid');
                     pincodeField.classList.add('valid');
                     cityField.classList.remove('invalid');
@@ -481,6 +460,7 @@ function getCityState() {
                     stateField.classList.add('valid');
                     pincodeIsValid = true;
                 } else {
+                    console.error(data.error);
                     errorIcon.style.display = 'block';
                     errorMsg.style.display = 'block';
                     errorMsg.textContent = "Invalid Pincode!";
@@ -492,8 +472,9 @@ function getCityState() {
                     stateField.classList.remove('valid');
                     pincodeIsValid = false;
                 }
-            })
+            }))
             .catch(error => {
+                console.error(error.message);
                 errorIcon.style.display = 'block';
                 errorMsg.style.display = 'block';
                 errorMsg.textContent = "Something Went Wrong, try after sometimes!";
@@ -511,27 +492,20 @@ function getCityState() {
    }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const pincodeField = document.getElementById('inp_pincode');
-    const cityField = document.getElementById('inp_city');
-    const stateField = document.getElementById('inp_state');
 
-    pincodeField.addEventListener('input', function() {
-        if (this.value.length === 6) {
-            getCityState();
-        } else {
-            cityField.value = '';
-            stateField.value = '';
-            cityField.classList.remove('valid');
-            stateField.classList.remove('valid');
-        }
-    });
-});
+  pincodeField.addEventListener('input', function() {
+      if (this.value.length === 6) {
+           getCityState();
+      } else {
+          cityField.value = '';
+          stateField.value = '';
+          cityField.classList.remove('valid');
+          stateField.classList.remove('valid');
+      }
+  });
 
         /*---- Onclick city-state input ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const boxes = document.querySelectorAll('.cs-box');
-  const alertBox = document.getElementById('alert-box');
   
   boxes.forEach(box => {
     box.addEventListener('click', () => {
@@ -542,14 +516,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-});
 
     /*-- uploadBtn border onclick submit btn --*/
-document.addEventListener('DOMContentLoaded', () => {
   const fileInput = document.getElementById('inp_photo');
   const uploadPhotoBtn = document.getElementById('upload_photo_btn');
   const error = document.getElementById('upload-error');
-  const errorMsg = document.getElementById('photo-error');
+  const photoError = document.getElementById('photo-error');
   const submitDisabledBtn = document.getElementById('submit-disabled-btn');
   const submitBtn = document.getElementById('submit-btn');
   const result = document.getElementById('result');
@@ -564,7 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           error.classList.remove('shake');
         }, 500);
-        errorMsg.style.display = 'none';
+        photoError.style.display = 'none';
       } else {
         error.style.display = 'none';
       }
@@ -576,22 +548,17 @@ document.addEventListener('DOMContentLoaded', () => {
         uploadPhotoBtn.classList.remove('valid');
         uploadPhotoBtn.classList.add('invalid');
         error.style.display = 'block';
-        errorMsg.style.display = 'none';
+        photoError.style.display = 'none';
       } else {
         error.style.display = 'none';
       }
     });
-});
 
          /*-- Preview student's photo --*/
-document.addEventListener('DOMContentLoaded', () => {
   const photoBox = document.getElementById('photo_box');
-  const fileInput = document.getElementById('inp_photo');
-  const uploadPhotoBtn = document.getElementById('upload_photo_btn');
   const deletePhotoBtn = document.getElementById('delete_photo_btn');
   const uploadError = document.getElementById('upload-error');
   const preview = document.getElementById('default_image_photo');
-  const errorMsg = document.getElementById('photo-error');
   const defaultPhotoImageSrc = 'https://uploads.onecompiler.io/42fkuwhzd/42rfnf4fh/1000038208.png';
   const maxSize = 2 * 1024 * 1024;
 
@@ -613,14 +580,14 @@ document.addEventListener('DOMContentLoaded', () => {
         deletePhotoBtn.style.display = 'inline-block';
         uploadPhotoBtn.style.display = 'none';
         uploadError.style.display = 'none';
-        errorMsg.style.display = 'none';
+        photoError.style.display = 'none';
       };
       reader.readAsDataURL(file);
     } else {
-      errorMsg.textContent = file && !allowedTypes.includes(file.type) 
+      photoError.textContent = file && !allowedTypes.includes(file.type) 
         ? 'Invalid file type! '
         : 'File size exceeds the limit.';
-      errorMsg.style.display = 'block';
+      photoError.style.display = 'block';
       fileInput.value = '';
       preview.src = defaultPhotoImageSrc;
       photoBox.classList.add('invalid');
@@ -637,16 +604,12 @@ document.addEventListener('DOMContentLoaded', () => {
     uploadPhotoBtn.style.display = 'inline-block';
     uploadPhotoBtn.classList.add('invalid');
     fileInput.value = '';
-    errorMsg.style.display = 'none';
+    photoError.style.display = 'none';
   });
-});
 
        /*-- Declaration check button --*/
-document.addEventListener('DOMContentLoaded', () => {
   const declarationCheckBtn = document.getElementById('declaration_check_btn');
   const declarationCheckboxError = document.querySelector('.declaration-checkbox-error');
-  const submitDisabledBtn = document.getElementById('submit-disabled-btn');
-  const submitBtn = document.getElementById('submit-btn');
   
   declarationCheckBtn.addEventListener('click', (event) => {
     event.preventDefault();
@@ -663,7 +626,7 @@ document.addEventListener('DOMContentLoaded', () => {
       declarationCheckBtn.classList.add('invalid');
     }
   });
-});
+    
 
              /*---- CAPTCHA ----*/
 function generateCaptcha() {
@@ -707,72 +670,26 @@ function validateCaptcha() {
   return captchaIsValid;
 }
 
-document.addEventListener('DOMContentLoaded', generateCaptcha);
+  generateCaptcha();
 
 
           /*-- Student's registration process --*/
-document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('form');
-  const pk = "MUhaVTVUUHhFX0JzLVlfZkc=";
-  const sk = "VkRCV2RtTnNiRmxTYWs1UlZrUkJPUT09";
-  const submitDisabledBtn = document.getElementById('submit-disabled-btn');
-  const submitBtn = document.getElementById('submit-btn');
   const emailInput = document.getElementById('inp_email');
-  const email = emailInput.value.trim();
-  const pincodeField = document.getElementById('inp_pincode');
+  setTimeout(() => emailInput.value = currentUser.email, 2000);
   const pErrorMsg = document.getElementById('error');
   const firstNameInput = document.getElementById('inp_student_first_name');
   const midNameInput = document.getElementById('inp_student_middle_name');
   const lastNameInput = document.getElementById('inp_student_last_name')
-  const declarationCheckBtn = document.getElementById('declaration_check_btn');
-  const declarationCheckboxError = document.querySelector('.declaration-checkbox-error');
-  const alertBox = document.getElementById('alert-box');
+  const inpRegId = document.getElementById('inp_reg_id');
+  const inpSubTime = document.getElementById('inp_sub_time');
   const afterReview = document.getElementById('after-review');
-  const xd = atob(sk);
-  const yd = atob(xd);
-  const zd = atob(yd);
-  const verifyBox = document.getElementById('v-box-bg');
-  const verifyBoxContent = document.getElementById('v-box');
-  const vLock = document.getElementById('v-lock');
-  const vUnlock = document.getElementById('v-unlock');
-  const vDl = document.getElementById('v-dl');
-  const vHeading = document.getElementById('v-heading');
-  const vOtpVerify = document.getElementById('v-otp-verify');
-  const eye = document.getElementById('v-eye');
-  const eyeSlash = document.getElementById('v-eye-slash');
-  const maskMail = document.getElementById('mask-mail');
-  const editBtn = document.getElementById('edit-btn');
-  const editQ = document.getElementById('edit-q');
-  const editQContent = document.getElementById('edit-q-content');
-  const q = document.getElementById('q');
-  const editYes = document.getElementById('edit-yes');
-  const editNo = document.getElementById('edit-no');
-  const editInp = document.getElementById('edit-inp');
-  const quiteEdit = document.getElementById('quite-edit');
-  const cEmailInput = document.getElementById('inp_c_email');
-  const cEmail = cEmailInput.value.trim();
-  const cEmailMsg = document.getElementById('c-email-msg');
-  const otpBtn = document.getElementById('otp-btn');
-  const toString = atob(zd);
-  const resendOtp = document.getElementById('resend-otp');
-  const resendMsg = document.getElementById('resend-msg');
-  const otpInput = document.getElementById('inp_otp');
-  const otpMsg = document.getElementById('otp-msg');
-  const otpVerifyGif = document.getElementById('otp-verify-gif');
-  const vFormPrint = document.getElementById('v-form-dl');
-  const dlNo = document.getElementById('dl-no');
-  const dlYes = document.getElementById('dl-yes');
-  const verifyLoading = document.getElementById('vlg-bg');
-  const loading = document.getElementById('loading-bg');
   const loadingContent = document.getElementById('loading');
   const loadingError = document.getElementById('loading-error');
   const formError = document.getElementById('form-error');
   const backNote = document.getElementById('back-note');
   const waitNote = document.getElementById('wait-note');
-
-  let letEmail = "";
-  let letCEmail = "";
-
+  
   function validateOnInput() {
     const inputFields = form.querySelectorAll('input:not(.inp_captcha), select');
     inputFields.forEach(input => {
@@ -858,17 +775,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   });
 
-  function maskEmail(currentEmail) {
-    const [localPart, domain] = currentEmail.split("@");
-    const maskedLocal = localPart[0] + "*".repeat(localPart.length - 2) + localPart.slice(-1);
-   
-    return `${maskedLocal}@${domain}`;
-  }
-
   submitBtn.addEventListener('click', (event) => {
       event.preventDefault();
-
-      const pwEmail = emailInput.value.trim();
+      
       const finalName = firstNameInput.value.trim();
       const submitError = document.getElementById('submit-error');
       const subjectField = document.getElementById('subject');
@@ -887,11 +796,8 @@ document.addEventListener('DOMContentLoaded', () => {
         submitError.style.display = 'none';
         formError.style.display = 'none';
         loading.style.display = 'grid';
-        letEmail = emailInput.value.trim();
-        letCEmail = letEmail;
-        cEmailInput.value = letCEmail;
-        maskMail.textContent = maskEmail(emailInput.value.trim());
-        sendPw(pwEmail, finalName);
+        backNote.style.display = 'block';
+        submitForm();
         console.log('Form is valid. Proceeding to the next page...');
       }
       else {
@@ -916,464 +822,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
   });
-  
-  eye.addEventListener('click', () => {
-      maskMail.textContent = emailInput.value.trim();
-      eye.style.display = 'none';
-      eyeSlash.style.display = 'block';
-  });
-  
-  eyeSlash.addEventListener('click', () => {
-      maskMail.textContent = maskEmail(emailInput.value.trim());
-      eyeSlash.style.display = 'none';
-      eye.style.display = 'block';
-  });
-  
-  
-let pressTimer;
 
-const elements = [
-  { btn: eye, title: document.getElementById('eye-title') },
-  { btn: editBtn, title: editBtn.nextElementSibling }
-];
+  let regId;
+  let confirmTime;
 
-// Function to start press
-function startPress(title) {
-  pressTimer = setTimeout(() => {
-    console.log("Long press detected!");
-    title.classList.add("pressed"); // Add class to show the title
-    navigator.vibrate(100);
-  }, 500); // Adjust duration for long press
-}
-
-// Function to cancel press
-function cancelPress(title) {
-  clearTimeout(pressTimer);
-  setTimeout(() => {
-    title.classList.remove('pressed'); // Remove class after release
-  }, 500);
-}
-
-// Loop through elements and apply event listeners
-elements.forEach(({ btn, title }) => {
-  ["mousedown", "touchstart"].forEach(event => 
-    btn.addEventListener(event, () => startPress(title))
-  );
-
-  ["mouseup", "mouseleave", "touchend", "touchcancel"].forEach(event => 
-    btn.addEventListener(event, () => cancelPress(title))
-  );
-});
-
-
-
-  
-  editBtn.addEventListener('click', () => {
-      maskMail.textContent = maskEmail(emailInput.value.trim());
-      editQ.classList.add('expand');
-      eyeSlash.style.display = 'none';
-      eye.style.display = 'block';
-  });
-  
-  editYes.addEventListener('click', () => {
-      editQContent.classList.add('move-in');
-      setTimeout(() => {
-        q.style.display = 'none';
-        editInp.style.display = 'block';
-        editQContent.classList.add('move-out');
-        quiteEdit.classList.add('move');
-      }, 1000);
-  });
-  
-  editNo.addEventListener('click', () => {
-      editQ.classList.remove('expand');
-  });
-  
-  quiteEdit.addEventListener('click', () => {
-      editQ.classList.remove('expand');
-      setTimeout(() => {
-        cEmailInput.value = emailInput.value.trim();
-        cEmailInput.classList.remove('valid');
-        cEmailInput.classList.remove('invalid');
-        cEmailMsg.classList.remove('unsuccessful');
-      }, 500);
-  });
-  
-  function generatePw() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-  }
-  
-  emailjs.init(atob(pk));
-
-  function sendPw(email, name, mode = "initial") {
-    sessionStorage.removeItem('dmVyaWZpY2F0aW9uUHc=');
-    sessionStorage.removeItem('ZHluYW1pYyBrZXk=');
-    
-    const pw = generatePw();
-    const templateParams = {
-      user_email: email,
-      s_name: name,
-      p_c: pw
-    };
-    
-    const pwD = CryptoJS.SHA256(Date.now().toString() + Math.random().toString()).toString();
-    const ePw = CryptoJS.AES.encrypt(pw, pwD).toString();
-    const pwdD = CryptoJS.SHA256(toString).toString();
-    const ePwd = CryptoJS.AES.encrypt(pwD, pwdD).toString();
-    
-    emailjs.send('service_dyp7uux', 'template_w63jyif', templateParams)
-      .then((response) => {
-        console.log('Success:', response);
-        sessionStorage.setItem('dmVyaWZpY2F0aW9uUHc=', ePw);
-        sessionStorage.setItem('ZHluYW1pYyBrZXk=', ePwd);
-        if (mode === "initial") {
-          verifyBox.style.display = 'grid';
-          setTimeout(() => {
-            initiateTimer();
-            loading.style.display = 'none';
-            verifyBox.classList.add('visible');
-            nextStep();
-          }, 2000);
-        } else if (mode === "resend") {
-          resendMsg.classList.add('successful');
-          resendMsg.textContent = 'OTP sent successfully...';
-          otpInput.value = "";
-          otpInput.classList.remove('invalid');
-          otpMsg.classList.remove('unsuccessful');
-          setTimeout(() => {
-            initiateTimer();
-          }, 1000);
-          setTimeout(() => {
-            verifyLoading.style.display = 'none';
-          }, 1500);
-          setTimeout(() => {
-            resendMsg.classList.remove('successful');
-          }, 2000);
-        } else if (mode === "correction") {
-          letCEmail = email;
-          letEmail = letCEmail;
-          emailInput.value = letEmail;
-          maskMail.textContent = maskEmail(emailInput.value.trim());
-          cEmailMsg.classList.add('successful');
-          cEmailMsg.textContent = 'OTP sent successfully...';
-          otpInput.value = "";
-          otpInput.classList.remove('invalid');
-          otpMsg.classList.remove('unsuccessful');
-          setTimeout(() => {
-            initiateTimer();
-            editQ.classList.remove('expand');
-          }, 1500);
-          setTimeout(() => {
-            cEmailInput.value = email;
-            cEmailInput.classList.remove('valid');
-            cEmailMsg.classList.remove('successful');
-            editQContent.classList.remove('move-in');
-            q.style.display = 'block';
-            editInp.style.display = 'none';
-            editQContent.classList.remove('move-out');
-            quiteEdit.classList.remove('move');
-          }, 2000);
-          setTimeout(() => {
-            verifyLoading.style.display = 'none';
-          }, 2500);
-        }
-        setTimeout(() => {
-          sessionStorage.removeItem('dmVyaWZpY2F0aW9uUHc=');
-          sessionStorage.removeItem('ZHluYW1pYyBrZXk=');
-        }, 5 * 60 * 1000);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        if (mode === "initial") {
-          setTimeout(() => {
-            loadingContent.style.display = 'none';
-            loadingError.style.display = 'block';
-            formError.style.display = 'block';
-          }, 3000); 
-          setTimeout(() => {
-            loading.style.display = 'none';
-          }, 5000);
-          setTimeout(()=> {
-            loadingContent.style.display = 'block';
-            loadingError.style.display = 'none';
-          }, 5200);
-        } else if (mode === "resend") {
-          resendMsg.classList.add('unsuccessful');
-          resendMsg.textContent = 'Something went wrong!';
-          setTimeout(() => {
-            verifyLoading.style.display = 'none';
-          }, 500);
-        } else if (mode === "correction") {
-          cEmailMsg.classList.add('unsuccessful');
-          cEmailMsg.textContent = 'Error: check Email and try again!';
-          setTimeout(() => {
-            verifyLoading.style.display = 'none';
-          }, 500);
-        }
-      });
-  }
-
-  function verifyPw(enteredPw) {
-    const pwdD = CryptoJS.SHA256(toString).toString();
-    const ePwd = sessionStorage.getItem('ZHluYW1pYyBrZXk=');
-    const dPwdBytes = CryptoJS.AES.decrypt(ePwd, pwdD);
-    const dPwd = dPwdBytes.toString(CryptoJS.enc.Utf8);
-
-    const ePw = sessionStorage.getItem('dmVyaWZpY2F0aW9uUHc=');
-    const dPwBytes = CryptoJS.AES.decrypt(ePw, dPwd);
-    const dPw = dPwBytes.toString(CryptoJS.enc.Utf8);
-    
-    const inpRegId = document.getElementById('inp_reg_id');
-    const inpSubTime = document.getElementById('inp_sub_time');
+  function storeNotifData() {
     const firstName = firstNameInput.value.trim();
     const midName = midNameInput.value.trim();
     const lastName = lastNameInput.value.trim();
-    const fullName = midName ? `${firstName} ${midName} ${lastName}` : `${firstName} ${lastName}`;
-   
-    const pattern = /^\d{6}$/;
+    const fullName = midName ? `${firstName} ${midName} ${lastName}` : `${firstName} ${lastName}`;   
+    const random = Math.floor(100000 + Math.random() * 900000);     
+    regId = `SE${random}R`;
+    confirmTime = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString('en-GB');
 
-    if (enteredPw === dPw) {
-      const random = Math.floor(100000 + Math.random() * 900000);
-      regId = `SE${random}R`;
-      confirmTime = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString('en-GB');
-      storeNotifData(regId, fullName, confirmTime);
-      inpRegId.value = regId;
-      inpSubTime.value = confirmTime;
-      vLock.style.display = 'none';
-      vUnlock.style.display = 'block';
-      otpInput.classList.remove('invalid');
-      otpInput.classList.add('valid');
-      otpMsg.classList.remove('unsuccessful');
-      otpMsg.classList.add('successful');
-      otpMsg.textContent = "Verification Successful...";
-      otpVerifyGif.style.display = 'none';
-      nextStep();
-      setTimeout(() => {
-        verifyBoxContent.classList.add('close');
-      }, 500);
-      setTimeout(() => {
-        vUnlock.style.display = 'none';
-        vDl.style.display = 'block';
-        vHeading.textContent = 'Download Form';
-        vOtpVerify.style.display = 'none';
-        vFormPrint.style.display = 'block';
-        verifyBoxContent.classList.remove('close');
-      }, 1000);
-      console.log('OTP verified successfully.');
-    } else {
-        otpInput.focus();
-        otpInput.style.pointerEvents = 'auto';
-        editBtn.style.pointerEvents = 'auto';
-        otpInput.classList.remove('valid');
-        otpInput.classList.add('invalid');
-        otpMsg.classList.remove('successful');
-        otpMsg.classList.add('unsuccessful');
-        otpMsg.classList.add('shake');
-        otpVerifyGif.style.display = 'none';
-        setTimeout(() => {
-          otpMsg.classList.remove('shake');
-        }, 500);
-      
-      if (pattern.test(enteredPw)) {
-        otpMsg.textContent = "Invalid OTP!";
-        vLock.style.display = 'block';
-        vUnlock.style.display = 'none';
-        console.error('Invalid OTP! Please try again...');
-      } else {
-        otpMsg.textContent = "Enter a valid 6-digit OTP!";
-        otpInput.value = "";
-        vLock.style.display = 'block';
-        vUnlock.style.display = 'none';
-        console.warn('Please enter a valid 6-digit OTP...');
-      }
-    }
-  }
-  
-  function storeNotifData(id, name, time) {
-    const data = `${id}-${name}-${time}`;
+    inpRegId.value = regId;
+    inpSubTime.value = confirmTime;
+
+    const data = `${regId}-${fullName}-${confirmTime}`;
     const eData = btoa(data);
     localStorage.setItem('c3RvcmVkX2RhdGE=', eData);
   }
 
-  function submitForm() { 
-    setTimeout(() => {
-      verifyBox.classList.remove('visible');
-    }, 1500);
-    setTimeout(() => {
-      verifyBox.style.display = 'none';
-      loading.style.display = 'grid';
-      backNote.style.display = 'block';
+  async function submitForm() {
+      await storeNotifData();
+      await printForm();
       form.submit();
-    }, 1750);
-    setTimeout(() => {
-      form.reset();
-    }, 12000);
-    setTimeout(() => {
-      waitNote.style.display = 'block';
-    }, 52000);
-  }
-  
-  otpInput.addEventListener('input', function () {
-    const enteredOTP = otpInput.value.trim();
-     
-    if (enteredOTP.length === 6) {
-      this.blur();
-      this.style.pointerEvents = 'none';
-      otpVerifyGif.style.display = 'block';
-      editBtn.style.pointerEvents = 'none';
+      
       setTimeout(() => {
-        verifyPw(enteredOTP);
-      }, 2000);
-    }
-  });
-  
-  let timerInterval;
-  let remainingTime = 0;
-  let startTime = 0;
-  const timerDuration = 2 * 60;
-
-  function startTimer(duration) {
-    if (localStorage.getItem('cmVzZW5kX290cA==')) {
-        remainingTime = parseInt(localStorage.getItem('cmVzZW5kX290cA=='));
-    } else {
-        remainingTime = duration;
-    }
-
-    clearInterval(timerInterval);
-
-    startTime = Date.now();
-
-    timerInterval = setInterval(function() {
-      const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-
-      remainingTime = Math.max(0, duration - elapsedTime);
-
-      const minutes = Math.floor(remainingTime / 60);
-      const seconds = remainingTime % 60;
-      const timer = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-
-      resendOtp.innerHTML = `(Resend OTP) <span class="fa-regular fa-clock clock"></span> <strong class="timer">${timer}</strong>`; 
-
-      localStorage.setItem('cmVzZW5kX290cA==', remainingTime);
-
-      if (remainingTime <= 0) {
-        clearInterval(timerInterval);
-        handleTimerExpiry();
-      }
-    }, 1000);
+        form.reset();
+      }, 12000);
+      
+      setTimeout(() => {
+        waitNote.style.display = 'block';
+      }, 52000);
   }
 
-  function handleTimerExpiry() {
-    resendOtp.textContent = 'Resend OTP';
-    clearInterval(timerInterval);
-    localStorage.removeItem('cmVzZW5kX290cA==');
-  }
-
-  function initiateTimer() {
-    localStorage.removeItem('cmVzZW5kX290cA==');
-    startTimer(timerDuration);
-  }
-  
-  resendOtp.addEventListener('click', () => {
-    const sameEmail = emailInput.value.trim();
-    const sameName = firstNameInput.value.trim();
-
-    if (remainingTime <= 0) {
-      verifyLoading.style.display = 'grid';
-      sendPw(sameEmail, sameName, "resend");
-    }
-  });
-  
-  function sendPwToCEmail(currentEmail) {
-    let emailIsValid = false;
-    const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    function setValidationState(input, msgElement, isValid, message, shake = true) {
-      input.classList.toggle('valid', isValid);
-      input.classList.toggle('invalid', !isValid);
-      msgElement.classList.toggle('unsuccessful', !isValid);
-      msgElement.textContent = message;
-
-      if (shake) {
-        msgElement.classList.add('shake');
-        setTimeout(() => {
-          msgElement.classList.remove('shake');
-        }, 500);
-      }
-    }
-
-    if (currentEmail === emailInput.value.trim()) {
-      setValidationState(
-        cEmailInput,
-        cEmailMsg,
-        false,
-        "Email can't be same as previous one!"
-      );
-      emailIsValid = false;
-    } else if (!currentEmail) {
-      setValidationState(cEmailInput, cEmailMsg, false, "Email input can't be empty!");
-      emailIsValid = false;
-    } else if (pattern.test(currentEmail)) {
-      setValidationState(
-        cEmailInput,
-        cEmailMsg,
-        true,
-        "",
-        false
-      );
-      emailIsValid = true;
-      console.log('Email updated and OTP sent successfully...');
-    } else {
-      setValidationState(
-        cEmailInput,
-        cEmailMsg,
-        false,
-        "Please enter a valid email address!"
-      );
-      emailIsValid = false;
-    }
-    
-    return emailIsValid;
-  }
-  
-  cEmailInput.addEventListener('input', function () {
-    sendPwToCEmail(this.value.trim());
-  });
- 
-  otpBtn.addEventListener('click', (event) => {
-    event.preventDefault();
-    const newEmail = cEmailInput.value.trim();
-    const sameName = firstNameInput.value.trim();
-    const emailIsValid = sendPwToCEmail(newEmail);
-    
-    if (emailIsValid) {
-      verifyLoading.style.display = 'grid';
-      sendPw(newEmail, sameName, "correction");
-    } else {
-      console.warn('Please fix errors before sending otp to corrected email!');
-    }
-  });
-  
-  dlNo.addEventListener('click', () => {
-    verifyLoading.style.display = 'grid';
-    setTimeout(() => {
-      submitForm();
-    }, 1000);
-  });
-  
-  dlYes.addEventListener('click', () => {
-    verifyLoading.style.display = 'grid';
-    setTimeout(() => {
-      printForm();
-    }, 1000);
-    setTimeout(() => {
-      submitForm();
-    }, 1500);
-  });
-});
 
           /*---- convert photo to base64 ----*/
-document.addEventListener('DOMContentLoaded', () => {
+  let photoBase64 = null;
   const photoInput = document.getElementById('inp_photo');
   photoInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
@@ -1387,11 +873,6 @@ document.addEventListener('DOMContentLoaded', () => {
       reader.readAsDataURL(file);
     }
   });
-});
-
-let photoBase64 = null;
-let regId = null;
-let confirmTime = null;
 
            /*---- Receipt generation ----*/
 function printForm() {
@@ -1663,7 +1144,7 @@ function updateStatusBar() {
 window.addEventListener('online', updateStatusBar);
 window.addEventListener('offline', updateStatusBar);
 
-document.addEventListener('DOMContentLoaded', updateStatusBar);
+updateStatusBar();
 
       /*-- Function to detect ad blockers --*/
 let adblockDetected = false;
@@ -1699,14 +1180,11 @@ function detectAdBlock() {
     }, 2000);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const formStartBtn = document.querySelector('.form-start-btn');
    
   formStartBtn.addEventListener('click', function () {
     setTimeout(detectAdBlock, 1000);
     setInterval(detectAdBlock, 5000);
-  });      
-});
+  });
 
          /*---- chatbase.co ----*/
 window.embeddedChatbotConfig = {
@@ -1715,8 +1193,9 @@ window.embeddedChatbotConfig = {
 }
 
         /*---- © current year ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const year = document.getElementById('current-year');
   const currentYear = new Date().getFullYear();
   year.textContent = currentYear;
-});
+
+  
+}); // Dom load listener ends here.

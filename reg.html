@@ -387,7 +387,7 @@
     </select>
    </div>
    <div class="input-fields">
-    <input name="E-mail" id="inp_email" class="sna" type="email" placeholder="eg: abc123@email.com" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
+    <input name="E-mail" id="inp_email" class="sna" type="email" placeholder="eg: abc123@email.com" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" readonly>
     <label class="float-label inp_text_imp" for="inp_email">E-mail :</label>
    </div>
    <div class="input-fields">
@@ -485,67 +485,6 @@
   <div id="alert-box" role="alert"></div>
  </div>
 </div>
-
-           <!-- Verification -->
-  <div id="v-box-bg">
-   <div id="v-box">
-    <div class="v-header">
-     <span class="fa-solid fa-lock" id="v-lock"></span>
-     <span class="fa-solid fa-unlock-key-hole" id="v-unlock"></span>
-     <span class="fa-solid fa-download" id="v-dl"></span>
-     <h2 id="v-heading">OTP Verification</h2>
-    </div>
-    <div class="v-body">
-     <div id="v-otp-verify"> 
-      <p id="v-note">Kindly check your <b>email account</b> below for the OTP we just sent you to verify.</p>
-      <div class="mail-box">
-       <span class="fa-solid fa-eye" id="v-eye"></span>
-       <span class="fa-solid fa-eye-slash" id="v-eye-slash"></span>
-       <small id="eye-title">Show Email</small>
-       <p id="mask-mail"></p>
-       <span class="fa-solid fa-pencil" id="edit-btn"></span>
-       <small id="edit-title">Edit Email</small>
-      </div>
-      <div id="edit-q">
-       <span class="fa-solid fa-xmark" id="quite-edit"></span>
-       <div id="edit-q-content" class="edit-q-content">
-        <div id="q">
-         <h3>Email Correction</h3>
-         <p class="q-content">Do you want to edit your email address?</p>
-         <div class="ans-btns">
-          <button id="edit-yes">Yes</button>
-          <button id="edit-no">No</button>
-         </div>
-        </div>
-        <div id="edit-inp">
-         <div class="c-email-field">
-          <input name="Corrected E-mail" id="inp_c_email" class="sna" type="email" placeholder="Enter a valid email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
-          <label class="float-label inp_text_imp c-email-label" for="inp_c_email">Corrected E-mail :</label>
-         </div>
-         <p id="c-email-msg"></p>
-         <button id="otp-btn" type="button">Send OTP</button>
-        </div>
-       </div>
-      </div>
-      <div id="resend-otp"></div>
-      <p id="resend-msg"></p>
-      <input name="OTP" id="inp_otp" class="sna" type="tel" maxlength="6" minlength="6" autocomplete="off" pattern="^\d{6}$" value="" placeholder="Enter OTP" required>
-      <p id="otp-msg"></p>
-      <img id="otp-verify-gif" src="https://uploads.onecompiler.io/42fkuwhzd/42u3dq83t/1000054083.gif" alt="Verification_gif">
-      <div id="vlg-bg">
-       <img id="verify-loading-gif" src="https://uploads.onecompiler.io/42fkuwhzd/42u3dq83t/1000054083.gif" alt="Verify_loading_gif">
-      </div>
-     </div>
-     <div id="v-form-dl">
-      <p class="dl-q">Do you want to download the form?</p>
-      <div class="dl-btns">
-       <button id="dl-no">No</button>
-       <button id="dl-yes">Yes</button>
-      </div>
-     </div>
-    </div>
-   </div>
-  </div>
 
           <!-- Status bar -->
   <div id="status-bar">

@@ -1178,4 +1178,4 @@ function updateStatusBar() {
 window.addEventListener('online', updateStatusBar);
 window.addEventListener('offline', updateStatusBar);
 
-}
+} // For if (correctPath);
