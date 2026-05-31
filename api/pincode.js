@@ -10,7 +10,13 @@ export default async function handler(req, res) {
     const { code } = JSON.parse(req.body);
     
     const agent = new https.Agent({ rejectUnauthorized: false }); 
-    const response = await fetch(`https://api.postalpincode.in/pincode/${code}`, { agent });
+    const response = await fetch(`https://api.postalpincode.in/pincode/${code}`, { agent }, {
+      method: "GET",
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        "Accept": "application/json"
+      }
+    });
     const data = await response.json();
     
     if (!response.ok) {
