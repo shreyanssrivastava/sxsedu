@@ -9,9 +9,13 @@ export default async function handler(req, res) {
  
     const response = await fetch(`https://api.postalpincode.in/pincode/${code}`);
     const data = await response.json();
-    const result = data[0].PostOffice[0];
     
-    if (data[0].Status === "Success") {  
+    if (!response.ok) {
+        throw new Error("API Error: " + response.status);
+    }
+    
+    if (data[0].Status === "Success") {
+      const result = data[0].PostOffice[0];
       res.status(200).json({ city: result.District, state: result.State });
     } else {
         res.status(404).json({ error: "Invalid Pincode!" });
