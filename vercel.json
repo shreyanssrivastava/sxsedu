@@ -1,6 +1,9 @@
 {
   "routes": [
     { "src": "^/api/(.*)", "dest": "/api/$1" },
-    { "src": "^/(.*)", "dest": "/client/$1" }
+
+    { "src": "^/([^\\.]+)$", "dest": "/client/$1.html" },
+
+    { "src": "^/(.*)$", "dest": "/client/$1" }
   ]
 }
