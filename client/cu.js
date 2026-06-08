@@ -4,14 +4,17 @@
   
                   /*---- Home navigation & account checkup ----*/
 document.addEventListener('DOMContentLoaded', () => {
-  const home = document.getElementById('home');
-    home.addEventListener('click', () => {
-      if (document.referrer.includes('index.html')) {
-          history.back(); // Go back if possible (acts like pressing the Back button)
-      } else {
-        location.replace('index.html'); // Fallback in case history is not available
-      }
-    });
+//  const ref = new URL(document.referrer);
+  const ref = document.referrer ? new URL(document.referrer) : null;
+  const homePath = ref ? ref.pathname === '/index' || ref.pathname === '/' : false;
+  const home = document.getElementById('home'); 
+  home.addEventListener('click', () => {
+    if (homePath) {
+        history.back(); // Go back if possible (acts like pressing the Back button)
+    } else {
+        location.replace('/'); // Fallback in case history is not available
+    }
+  });
     
   const firebaseConfig = {
     apiKey: "AIzaSyDjcYwQSstXZPf3ratDeYHJvgYiLdpc4JU",
@@ -28,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     onAuthStateChanged(auth, (user) => {
         if (!user) {
-            window.location.href = 'index.html?mode=login';
+            window.location.href = '/index.html?mode=login';
         } else {
             document.body.style.display = 'flex';
         }
