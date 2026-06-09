@@ -4,7 +4,6 @@
   
                   /*---- Home navigation & account checkup ----*/
 document.addEventListener('DOMContentLoaded', () => {
-//  const ref = new URL(document.referrer);
   const ref = document.referrer ? new URL(document.referrer) : null;
   const homePath = ref ? ref.pathname === '/index' || ref.pathname === '/' : false;
   const home = document.getElementById('home'); 
