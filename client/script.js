@@ -67,7 +67,7 @@ export function showNotification(message, timestamp) {
   toggleBellDot();
 }
 
-const correctPath = window.location.pathname.includes("index.html") || window.location.pathname.endsWith("edu/") || window.location.href.endsWith("sxsedu.vercel.app/");
+const correctPath = window.location.pathname === "/" || window.location.pathname.includes("/index");
 
 if (correctPath) {
 
@@ -1085,10 +1085,9 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
     chatbotId: "9YRSDWYGQFngIG3W6Ahqp",
     domain: "www.chatbase.co"
   }
-  
-/*
-  setTimeout(() => {
-   const userName = "SSS";  
+    
+ const userName = "Shreyans";
+ setTimeout(() => {
    if (userName && window.chatbase && window.chatbase.setInitialMessages) {
      window.chatbase.setInitialMessages([
        `Hello ${userName}, how can I help!`
@@ -1096,8 +1095,8 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
    } else {
        console.error('something wrong');
    }
-  }, 3000);
-*/
+ }, 2000);
+
 
         /*---- © current year ----*/
   const year = document.getElementById('current-year');
