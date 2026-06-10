@@ -5,18 +5,17 @@
 
               /*---- Home navigation & account checkup ----*/
 document.addEventListener('DOMContentLoaded', () => {
- // const home = document.getElementById('home');
-    home.addEventListener('click', () => {
-      if (document.referrer.includes('index.html')) {
-          history.back(); // Go back if possible (acts like pressing the Back button)
-      } else {
-        location.replace('index.html'); // Fallback in case history is not available
-      }
-    });
+  const ref = document.referrer ? new URL(document.referrer) : null;
+  const homePath = ref ? ref.pathname === '/index' || ref.pathname === '/' : false;
+  const home = document.getElementById('home');
+  home.addEventListener('click', () => {
+    if (homePath) {
+        history.back(); // Go back if possible (acts like pressing the Back button)
+    } else {
+        location.replace('/'); // Fallback in case history is not available
+    }
+  });
   
-   //  if (!item) {
-   //     window.location.href = 'index.html?mode=login';
-   //}
    
   const firebaseConfig = {
     apiKey: "AIzaSyDjcYwQSstXZPf3ratDeYHJvgYiLdpc4JU",
@@ -33,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     onAuthStateChanged(auth, (user) => {
         if (!user) {
-            window.location.href = 'index.html?mode=login';
+            window.location.href = '/index.html?mode=login';
         } else {
             document.body.style.display = 'flex';
         }
@@ -497,7 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const textWidth = doc.getTextWidth(linkText);
     const linkX = (pageWidth - textWidth) / 2;
     const linkY = footerEndY - 10;
-    doc.textWithLink(linkText, linkX, linkY, { url: 'https://sxsco.github.io/edu/' });
+    doc.textWithLink(linkText, linkX, linkY, { url: 'https://sxsedu.vercel.app/' });
     doc.setLineWidth(0.2);
     doc.setDrawColor(40, 60, 90);
     doc.line(linkX, linkY + 1, linkX + textWidth, linkY + 1);
@@ -544,7 +543,7 @@ function updateStatusBar() {
   const internet = document.getElementById('internet-img');
   const noInternet = document.getElementById('no-internet-icon')
   const msg = document.getElementById('internet-msg');
-  const logo = document.getElementById('logo');
+//  const logo = document.getElementById('logo');
 
   if (navigator.onLine) {
     setTimeout(() => {
