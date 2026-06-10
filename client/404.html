@@ -4,16 +4,15 @@
    <meta charset="UTF-8"> 
    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-   <title>S² Education | Thank You</title>
-   <link rel="icon" href="icon.png" type="image/png">
-   <link rel="shortcut icon" href="icon.png" type="image/png">
-   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-   <link rel="manifest" href="site.webmanifest">
-   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/> 
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+   <title>Loading...</title>
+   <link rel="icon" href="/icon.png" type="image/png">
+   <link rel="shortcut icon" href="/icon.png" type="image/png">
+   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+   <link rel="manifest" href="/site.webmanifest">
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/> 
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Rubik+Scribble&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap">
    <style>
            /*---- media-query ----*/ 
@@ -116,7 +115,7 @@ body {
   margin: 0;
   text-align: center;
 }
-.card.load {
+.card.show {
   display: block;
 }
 .success {
@@ -202,7 +201,7 @@ body {
   background-color: transparent;
   color: white;
   padding: .8rem;
-  gap: .5rem;
+  gap: .7rem;
   font-size: 1rem;
   border-radius: .8rem;
   border: .1rem solid #fff;
@@ -224,10 +223,10 @@ body {
   transition: all .5s ease;
 }
 #no-request {
-  display: block;
-}
-#no-request.hide {
   display: none;
+}
+#no-request.show {
+  display: block;
 }
 #no-request img {
   width: 16rem;
@@ -265,103 +264,101 @@ body {
   justify-content: center;
 }
    </style>
-   
+   <script src="https://kit.fontawesome.com/2e39ca5f52.js" crossorigin="anonymous"></script>  
    <script type="module">
               /*---- Porting ----*/
 import { showNotification } from "./script.js";
   
-             /*---- OnPageLoad ----*/
-function getFormRequest() {
+document.addEventListener('DOMContentLoaded', () => {
+         
   const eData = localStorage.getItem('c3RvcmVkX2RhdGE=');
   const no = document.getElementById('no-request');
   const card = document.getElementById('content');
-  
-  if (!eData) {
-    no.style.display = 'block';
-    card.style.display = 'none';
-    document.title = '404 not found!';
-    return;
+
+  if (eData) {
+    card.classList.add('show');      
+    document.title = 'S² Education | Thank You';
+    getFormRequest();
+  } else {
+      no.classList.add('show');
+      document.title = '404 not found!';
   }
+
+             /*---- Handle form request ----*/
+  function getFormRequest() {
+    typing();
+    const ref = document.getElementById('ref');
+    const regId = document.getElementById('reg-id');
+    const data = atob(eData);
+    const [id, name, time] = data.split('-');
+    const update = `Registration ID: ${id}<br>Student Registration for ${name} has been successfully submitted. The details will be verified, and you will be notified upon completion.`;
+    showNotification(update, time);
+    ref.textContent = id;
   
-  no.classList.add('hide');
-  card.classList.add('load');
-  typing();
-  const ref = document.getElementById('ref');
-  const regId = document.getElementById('reg-id');
-  const data = atob(eData);
-  const [id, name, time] = data.split('-');
-  const update = `Registration ID: ${id}<br>Student Registration for ${name} has been successfully submitted. The details will be verified, and you will be notified upon completion.`;
-  showNotification(update, time);
-  ref.textContent = id;
-  
-  if (ref.textContent) {
-    let isCopying = false;
-    regId.addEventListener('click', function () {
-      if (isCopying) return;
-      const text = this.textContent;
-      isCopying = true;
-      navigator.clipboard.writeText(text)
-      .then((response) => {
-        console.log(response);
-        this.textContent = 'Copied to clipboard!';
-        setTimeout(() => {
-          this.textContent = text;
-          isCopying = false;
-        }, 2000);
-      })
-      .catch((err) => {
-        console.error('Error in copying:', err);
-        this.textContent = 'Failed to copy';
-        setTimeout(() => {
-          this.textContent = text;
-          isCopying = false;
-        }, 2000);
+    if (ref.textContent) {
+      let isCopying = false;
+      regId.addEventListener('click', function () {
+        if (isCopying) return;
+        const text = this.textContent;
+        isCopying = true;
+        navigator.clipboard.writeText(text)
+        .then((response) => {
+          console.log(response);
+          this.textContent = 'Copied to clipboard!';
+          setTimeout(() => {
+            this.textContent = text;
+            isCopying = false;
+          }, 2000);
+        })
+        .catch((err) => {
+          console.error('Error in copying:', err);
+          this.textContent = 'Failed to copy';
+          setTimeout(() => {
+            this.textContent = text;
+            isCopying = false;
+          }, 2000);
+        });
       });
-    });
-  }
-  
-  localStorage.removeItem('c3RvcmVkX2RhdGE=');
-}
-     
-function typing() { 
-  const textElement = document.getElementById("typing-text");
-  const text = "The Form has been Submitted Successfully.\nWe will reply to you soon.";
-  const check = document.getElementById('check');
-  textElement.innerHTML = "";
-      
-    let index = 0;
-    function typeLetter() {
-    textElement.innerHTML += text.charAt(index) === '\n' ? '<br>' : text.charAt(index);
-      if (++index < text.length) {
-        setTimeout(typeLetter, 50);
-      } else {
-        check.style.animation = 'breathing 2s linear infinite';
-      }
     }
+  
+    localStorage.removeItem('c3RvcmVkX2RhdGE=');
+  }
+     
+  function typing() { 
+    const textElement = document.getElementById("typing-text");
+    const text = "The Form has been Submitted Successfully.\nWe will reply to you soon.";
+    const check = document.getElementById('check');
+    textElement.innerHTML = "";
+      
+      let index = 0;
+      function typeLetter() {
+      textElement.innerHTML += text.charAt(index) === '\n' ? '<br>' : text.charAt(index);
+        if (++index < text.length) {
+          setTimeout(typeLetter, 50);
+        } else {
+          check.style.animation = 'breathing 2s linear infinite';
+        }
+      }
     
-  typeLetter();
-}
+    typeLetter();
+  }
 
-document.addEventListener("DOMContentLoaded", getFormRequest);
-
-        /*---- Go to Home ----*/
-document.addEventListener('DOMContentLoaded', () => {
+             /*---- Go to Home ----*/
   const btns = document.querySelectorAll('.back-btn');
   
   function goHome() {
-    window.location.replace("index.html");
+      window.location.replace("/");
   }
   
   btns.forEach((btn) => {
-    btn.addEventListener('click', goHome);
+      btn.addEventListener('click', goHome);
   });
-});
      
-        /*---- © current year ----*/
-document.addEventListener('DOMContentLoaded', () => {
+          /*---- © current year ----*/
   const year = document.getElementById('current-year');
   const currentYear = new Date().getFullYear();
   year.textContent = currentYear;
+
 });
    </script>
   </head>
@@ -391,11 +388,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <h1 class="thanks logo-color">Thank You!</h1>
         <p id="reg-id">Registration ID: <code id="ref"></code></p>
         <p class="card-p" id="typing-text"></p>
-        <div class="back-btn-container"><button class="back-btn"><span class="material-symbols-outlined">home_app_logo</span>Go To Home</button></div>
+        <div class="back-btn-container"><button class="back-btn"><span class="fa-brands fa-airbnb"></span>Go To Home</button></div>
     </div>
+    
+            <!-- 404 not found -->
     <div id="no-request">
       <img class="not-found" src="https://uploads.onecompiler.io/42fkuwhzd/42w39nmq5/1000063117.gif" alt="page-not-found">
-      <div class="back-btn-container"><button class="back-btn"><span class="material-symbols-outlined">home_app_logo</span>Go To Home</button></div>
+      <div class="back-btn-container"><button class="back-btn"><span class="fa-brands fa-airbnb"></span>Go To Home</button></div>
     </div>
 
             <!-- Footer -->
