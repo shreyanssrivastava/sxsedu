@@ -6,16 +6,16 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
    <meta name="theme-color" content="#000000">
    <title>S² Education | Student registration</title>
-   <link rel="icon" href="icon.png" type="image/png">
-   <link rel="shortcut icon" href="icon.png" type="image/png">
-   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-   <link rel="manifest" href="site.webmanifest">
-   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"> 
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
+   <link rel="icon" href="/assets/icon.png" type="image/png">
+   <link rel="shortcut icon" href="/assets/icon.png" type="image/png">
+   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+   <link rel="manifest" href="/site.webmanifest">
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"> 
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Fredoka:wght@300..700&family=Rubik+Scribble&family=Rubik+Wet+Paint&family=Slabo+27px&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap">
-   <link rel="stylesheet" href="reg.css">
+   <link rel="stylesheet" href="/reg.css">
    <script src="https://kit.fontawesome.com/2e39ca5f52.js" crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -23,8 +23,8 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator/qrcode.min.js"></script>
-   <script type="module" src="reg.js"></script>
-   <script src="pwa.js"></script>
+   <script type="module" src="/reg.js"></script>
+   <script src="/pwa.js"></script>
   </head>
   <body>
            <!-- navbar -->
@@ -44,11 +44,6 @@
            <!-- Front-page -->
 <div id="page-wrapper">
  <div id="page-sk">
-  <!--
-   <div class="sk sk-circle"></div>
-   <div class="sk sk-la"></div>
-   <div class="sk sk-lb"></div>
-  -->
    <div class="sk sk-box"></div>
  </div>
  
@@ -163,7 +158,7 @@
     <input type="hidden" name="_template" value="table">
     <input type="hidden" name="_subject" id="subject">
     <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_next" value="https://sxsco.github.io/edu/thanks.html">
+    <input type="hidden" name="_next" value="https://sxsedu.vercel.app/thanks">
             <!-- Visible-inputs -->
   <div class="fields-container">
    <input name="Registration Id" id="inp_reg_id" type="hidden">
@@ -402,6 +397,7 @@
     <input name="Street/Sector, Area" id="inp_area" class="no-cap" type="text" pattern="^(?!\s*$).+" placeholder="eg: Sector 18" required>
     <label class="float-label inp_text_imp" for="inp_area">Street/Sector, Area :</label>
    </div>
+   <!--
    <div class="input-fields">
     <input name="Pincode" id="inp_pincode" class="sna" type="tel" maxlength="6" minlength="6" pattern="^\d{6}$" value="" placeholder="6-digit Pincode" required>
     <label class="float-label inp_text_imp" for="inp_pincode">Pincode :</label>
@@ -418,6 +414,7 @@
     <label class="float-label inp_text_imp" for="inp_state">State :</label>
    </div>
   </div>
+  -->
   <div class="country">
    <div class="input-fields">
     <input name="Country" id="inp_country" value="India" type="text" placeholder="" readonly>
@@ -466,7 +463,6 @@
     <p id="captcha_msg"></p>
    </div>
   </div>
-
   <div class="btn-container">
    <button id="submit-disabled-btn" class="osa-element" type="button">Proceed</button>
    <button id="submit-btn" class="osa-element" type="button">Submit</button>
