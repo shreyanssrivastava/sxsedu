@@ -18,12 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }, pageLoadT);
 
               /*---- Home navigation & account checkup ----*/
-  const home = document.getElementById('home');
+    const ref = document.referrer ? new URL(document.referrer) : null;
+    const homePath = ref ? ref.pathname === '/index' || ref.pathname === '/' : false;
+    const home = document.getElementById('home');   
     home.addEventListener('click', () => {
-      if (document.referrer.includes('index.html')) {
+      if (homePath) {
           history.back(); // Go back if possible (acts like pressing the Back button)
       } else {
-        location.replace('index.html'); // Fallback in case history is not available
+          location.replace('/'); // Fallback in case history is not available
       }
     });
     
@@ -39,18 +41,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  
-    let currentUser = null;
+    
+  const emailInput = document.getElementById('inp_email');
+  let currentUser = null;
 
-    onAuthStateChanged(auth, (user) => {
-        if (!user) {
-            const currentPage = window.location.pathname.split('/').filter(Boolean).pop();
-            window.location.href = `index.html?mode=login&ref=${encodeURIComponent(btoa(currentPage))}`;
-        } else {
-            document.body.style.display = 'flex';
-            currentUser = user;
-        }
-    });
+  onAuthStateChanged(auth, (user) => {
+      if (!user) {
+          window.location.href = '/index.html?mode=login';
+      } else {
+          document.body.style.display = 'flex';
+          emailInput.value = user.email;
+          currentUser = user;
+      }
+  });
     
              /*---- Step marking ----*/
   const stepBox = document.getElementById('step-box');
@@ -124,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
        /*-- container's buttons function --*/
- //   const welcomeBox = document.getElementById('welcome-box');
     const giContainer = document.getElementById('g_i_container');
     const loading = document.getElementById('loading-bg');
     const formParentContainer = document.querySelector('.container');
@@ -150,7 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
             nextStep();
             document.body.style.overflowY = 'hidden';
             loading.style.display = 'grid';
-      //      welcomeBox.style.opacity = '0';
             formParentContainer.style.display = 'grid';
             formParentContainer.classList.remove('left');
             formParentContainer.classList.remove('right');
@@ -164,7 +165,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         giContainer.addEventListener('transitionend', function () {
             this.style.display = 'none';
-       //     welcomeBox.style.display = 'none';
             setTimeout(() => {
                 formParentContainer.classList.add('left');
                 document.body.style.overflowY = 'scroll';
@@ -433,7 +433,7 @@ document.addEventListener('keydown', function(event) {
   const errorIcon = document.getElementById('error-icon');
   const errorMsg = document.getElementById('error');
 
-function getCityState() {
+  function getCityState() {
     const pincode = pincodeField.value;
     cityField.value = '';
     stateField.value = '';
@@ -441,51 +441,46 @@ function getCityState() {
     errorMsg.style.display = 'none';
 
     if (pincode.length === 6) {
-       //  fetch(`https://api.postalpincode.in/pincode/${pincodeField.value}`)
-      fetch("https://sxsedu.vercel.app/api/pincode", {
-        method: "POST",
-        body: JSON.stringify({ code: pincode }),
-      })
-            .then(res =>
-                res.json().then(data => {
-                if (res.ok) {
-                //    const postOffice = data[0].PostOffice[0];
-                    cityField.value = data.city;
-                    stateField.value = data.state;
-                    pincodeField.classList.remove('invalid');
-                    pincodeField.classList.add('valid');
-                    cityField.classList.remove('invalid');
-                    cityField.classList.add('valid');
-                    stateField.classList.remove('invalid');
-                    stateField.classList.add('valid');
-                    pincodeIsValid = true;
-                } else {
-                    console.error(data.error);
-                    errorIcon.style.display = 'block';
-                    errorMsg.style.display = 'block';
-                    errorMsg.textContent = "Invalid Pincode!";
-                    pincodeField.classList.remove('valid');
-                    pincodeField.classList.add('invalid');
-                    cityField.value = '';
-                    stateField.value = '';
-                    cityField.classList.remove('valid');
-                    stateField.classList.remove('valid');
-                    pincodeIsValid = false;
-                }
-            }))
-            .catch(error => {
-                console.error(error.message);
-                errorIcon.style.display = 'block';
-                errorMsg.style.display = 'block';
-                errorMsg.textContent = "Something Went Wrong, try after sometimes!";
-                pincodeField.classList.remove('valid');
-                pincodeField.classList.add('invalid');
-                cityField.value = '';
-                stateField.value = '';
-                cityField.classList.remove('valid');
-                stateField.classList.remove('valid');
-                pincodeIsValid = false;
-            });
+      fetch(`https://sxsedu.vercel.app/api/pincode?code=${pincode}`)
+      .then(res =>
+          res.json().then(data => {
+          if (res.ok) {
+              cityField.value = data.city;
+              stateField.value = data.state;
+              pincodeField.classList.remove('invalid');
+              pincodeField.classList.add('valid');
+              cityField.classList.remove('invalid');
+              cityField.classList.add('valid');
+              stateField.classList.remove('invalid');
+              stateField.classList.add('valid');
+              pincodeIsValid = true;
+          } else {
+              console.error(data.error);
+              errorIcon.style.display = 'block';
+              errorMsg.style.display = 'block';
+              errorMsg.textContent = "Invalid Pincode!";
+              pincodeField.classList.remove('valid');
+              pincodeField.classList.add('invalid');
+              cityField.value = '';
+              stateField.value = '';
+              cityField.classList.remove('valid');
+              stateField.classList.remove('valid');
+              pincodeIsValid = false;
+          }
+      }))
+      .catch(error => {
+          console.error(error.message);
+          errorIcon.style.display = 'block';
+          errorMsg.style.display = 'block';
+          errorMsg.textContent = "Something Went Wrong, try after sometimes!";
+          pincodeField.classList.remove('valid');
+          pincodeField.classList.add('invalid');
+          cityField.value = '';
+          stateField.value = '';
+          cityField.classList.remove('valid');
+          stateField.classList.remove('valid');
+          pincodeIsValid = false;
+      });
     } else {
         errorIcon.style.display = 'block';
         errorMsg.style.display = 'block';
@@ -675,8 +670,6 @@ function validateCaptcha() {
 
           /*-- Student's registration process --*/
   const form = document.getElementById('form');
-  const emailInput = document.getElementById('inp_email');
-  setTimeout(() => emailInput.value = currentUser.email, 2000);
   const pErrorMsg = document.getElementById('error');
   const firstNameInput = document.getElementById('inp_student_first_name');
   const midNameInput = document.getElementById('inp_student_middle_name');
@@ -788,11 +781,11 @@ function validateCaptcha() {
       const selectedOptions = Array.from(optSubject.selectedOptions).map(option => option.value);
       inpSubject.value = selectedOptions.join(', ');
    
-      
+      const validEmail = emailInput.value === currentUser.email;
       const formIsValid = validateAndStyleInputs();
       const captchaIsValid = validateCaptcha();
 
-      if (formIsValid && pincodeIsValid && captchaIsValid && isDeclarationChecked()) {
+      if (validEmail && formIsValid && pincodeIsValid && captchaIsValid && isDeclarationChecked()) {
         submitError.style.display = 'none';
         formError.style.display = 'none';
         loading.style.display = 'grid';
@@ -874,7 +867,7 @@ function validateCaptcha() {
     }
   });
 
-           /*---- Receipt generation ----*/
+           /*---- Form printing ----*/
 function printForm() {
   const form = document.getElementById('form');
   const firstNameInput = document.getElementById('inp_student_first_name');
@@ -1064,7 +1057,7 @@ function printForm() {
     const textWidth = doc.getTextWidth(linkText);
     const linkX = (pageWidth - textWidth) / 2;
     const linkY = footerY + 10;
-    doc.textWithLink(linkText, linkX, linkY, { url: 'https://sxsco.github.io/edu/' });
+    doc.textWithLink(linkText, linkX, linkY, { url: 'https://sxsedu.vercel.app/' });
     doc.setLineWidth(0.2);
     doc.setDrawColor(40, 60, 90);
     doc.line(linkX, linkY + 1, linkX + textWidth, linkY + 1);
