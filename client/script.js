@@ -279,13 +279,13 @@ function markAllNotificationsAsSeen() {
     location.reload();
   });
   fs.addEventListener('click', () => {
-    window.location.href = 'fs.html';
+    window.location.href = '/fs.html';
   });
   fb.addEventListener('click', () => {
-    window.location.href = 'fb.html';
+    window.location.href = '/fb.html';
   });
   cu.addEventListener('click', () => {
-    window.location.href = 'cu.html';
+    window.location.href = '/cu.html';
   });
 
                 /*---- Sign In/Up ----*/
@@ -332,7 +332,7 @@ function markAllNotificationsAsSeen() {
   const regSlide = document.getElementById('slider-box-2');
   regSlide.addEventListener('click', () => {
     if (isUser) {
-        window.location.href = 'reg.html';
+        window.location.href = '/reg.html';
     } else {
         account.classList.add('show');
         logIcon.classList.replace('fa-user-large', 'fa-chevron-right');
@@ -532,15 +532,11 @@ complexQuery();
     applyActionCode(auth, oobCode)
     .then(() => {
         alert("Email Verified Successfully! ✅");
-        window.location.replace('index.html?mode=login');
+        window.location.replace('/index.html?mode=login');
     })
     .catch((error) => {
         alert("Verification Failed: " + error.message);
     });
-  }
-
-  if (mode && mode === 'login') {
-      account.classList.add('show');
   }
        
   onAuthStateChanged(auth, (user) => {
@@ -592,6 +588,12 @@ complexQuery();
      }
   });
 
+  if (mode && mode === 'login') {
+      if (isUser) {
+          alert('hii');
+      }
+      account.classList.add('show');
+  }
 
   function initGoogleSign() {
     setTimeout(() => {
@@ -633,7 +635,7 @@ complexQuery();
     .then(() => {
       fgStatus.textContent = 'If an account with that email exists, we’ve sent a password reset link.';
       setTimeout(() => {
-          window.location.replace('index.html?mode=login');
+          window.location.replace('/index.html?mode=login');
       }, 2000);
     })
     .catch((error) => {
@@ -646,7 +648,7 @@ complexQuery();
     confirmPasswordReset(auth, oobCode, newPassword)
     .then(() => {
       alert("Password Reset Successful! ✅");
-      window.location.replace('index.html?mode=login');
+      window.location.replace('/index.html?mode=login');
     })
     .catch((error) => {
       alert("Error: " + error.message);
@@ -705,7 +707,7 @@ complexQuery();
             const drp = atob(decodeURIComponent(refPage));
             window.location.replace(drp);
         } else {
-            window.location.replace('index.html');
+            window.location.replace('/');
         }
      //   if (photoUrl && photoUrl.includes("i.ibb.co")) {
    //         console.log('already stored in imgbb');
@@ -793,7 +795,7 @@ function handleAuthError(error) {
             logStatus.style.display = 'none';
         }
         
-        window.location.replace('index.html');
+        window.location.replace('/');
       })
       .catch((error) => {
         logStatus.textContent = handleAuthError(error);
@@ -820,7 +822,7 @@ function handleAuthError(error) {
         signStatus.textContent = "Verification link sent! Please check your email and verify your account before logging in."; 
         signOut(auth);
         setTimeout(() => {
-          window.location.replace('index.html?mode=login');
+          window.location.replace('/index.html?mode=login');
         }, 2000);
     } catch (error) {
         signStatus.textContent = handleAuthError(error);
@@ -976,14 +978,14 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
   updatePw.addEventListener('click', () => {
     const action = 'update-pw';
     const alert = "✅ Password updated successfully!";
-    const redirect = 'index.html?mode=login';
+    const redirect = '/index.html?mode=login';
     reAuth(action, alert, redirect);
   });
   
   deleteAcc.addEventListener('click', () => {
     const action = 'delete-acc';
     const alert = "😞 Account deleted successfully!";
-    const redirect = 'index.html';
+    const redirect = '/';
     
     if (confirm("Do you really want to delete account?")) {
       reAuth(action, alert, redirect);

@@ -790,6 +790,7 @@ function validateCaptcha() {
         formError.style.display = 'none';
         loading.style.display = 'grid';
         backNote.style.display = 'block';
+        nextStep();
         submitForm();
         console.log('Form is valid. Proceeding to the next page...');
       }
@@ -839,6 +840,7 @@ function validateCaptcha() {
   async function submitForm() {
       await storeNotifData();
       await printForm();
+      nextStep();
       form.submit();
       
       setTimeout(() => {
