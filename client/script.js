@@ -538,7 +538,7 @@ complexQuery();
         alert("Verification Failed: " + error.message);
     });
   }
-       
+    
   onAuthStateChanged(auth, (user) => {
      if (user) {
         isUser = true;
@@ -581,19 +581,14 @@ complexQuery();
          pfBox.style.display = 'none';
          accBox.style.display = 'flex';
          plusEls.forEach((el) => el.style.display = 'none');             
-         if (mode !== "login") {
-           initGoogleSign();
-           login.style.display = 'flex';
+         if (mode && mode === 'login') {
+             account.classList.add('show');
+         } else { 
+             initGoogleSign();
+             login.style.display = 'flex';           
          }
      }
   });
-
-  if (mode && mode === 'login') {
-      if (isUser) {
-          alert('hii');
-      }
-      account.classList.add('show');
-  }
 
   function initGoogleSign() {
     setTimeout(() => {
