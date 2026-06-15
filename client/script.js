@@ -702,7 +702,8 @@ complexQuery();
             const drp = atob(decodeURIComponent(refPage));
             window.location.replace(drp);
         } else {
-            window.location.replace('/');
+              afterLogin();
+        //    window.location.replace('/');
         }
      //   if (photoUrl && photoUrl.includes("i.ibb.co")) {
    //         console.log('already stored in imgbb');
@@ -774,8 +775,14 @@ function handleAuthError(error) {
     return "Something went wrong! Please try again later.";
 }
 
-
-     
+  function afterLogin() {
+      const ref = document.referrer ? new URL(document.referrer) : null;
+      if (ref) {
+          window.location.href = ref.pathname;
+      } else {
+          window.location.replace('/');
+      }
+  }  
        
   function loginUser(email, password) {
     signInWithEmailAndPassword(auth, email, password)
@@ -790,7 +797,8 @@ function handleAuthError(error) {
             logStatus.style.display = 'none';
         }
         
-        window.location.replace('/');
+          afterLogin();
+ //       window.location.replace('/');
       })
       .catch((error) => {
         logStatus.textContent = handleAuthError(error);
