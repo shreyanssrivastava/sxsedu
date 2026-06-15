@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   onAuthStateChanged(auth, (user) => {
       if (!user) {
-          window.location.href = '/index.html?mode=login';
+          window.location.replace('/index.html?mode=login');
       } else {
           document.body.style.display = 'flex';
           emailInput.value = user.email;
