@@ -516,7 +516,6 @@ complexQuery();
   
   const urlParams = new URLSearchParams(window.location.search);
   const mode = urlParams.get('mode');
-  const refPage = urlParams.get('ref');
   const oobCode = urlParams.get('oobCode');
 
   if (oobCode) {
@@ -698,10 +697,6 @@ complexQuery();
         
      //   const photoUrl = user.photoURL;
       //  console.log(photoUrl);
-        if (refPage) {
-            const drp = atob(decodeURIComponent(refPage));
-            window.location.replace(drp);
-        } else {
               afterLogin();
         //    window.location.replace('/');
         }
@@ -1115,7 +1110,11 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
 window.addEventListener("pageshow", (event) => {
     if (event.persisted) {
         sessionStorage.setItem('no-anime', 'true');
-        location.reload(); // Reload page if loaded from bfcache
+        if (correctPath && !window.location.search) {
+            location.reload(); // Reload page if loaded from bfcache
+        } else {
+            location.replace('/');
+        }
     }
 });
 
