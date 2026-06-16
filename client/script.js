@@ -699,7 +699,6 @@ complexQuery();
       //  console.log(photoUrl);
               afterLogin();
         //    window.location.replace('/');
-        }
      //   if (photoUrl && photoUrl.includes("i.ibb.co")) {
    //         console.log('already stored in imgbb');
     //        location.reload();
