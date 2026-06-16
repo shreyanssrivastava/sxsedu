@@ -2,8 +2,9 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
   
-                  /*---- Home navigation & account checkup ----*/
 document.addEventListener('DOMContentLoaded', () => {
+  
+              /*---- Home navigation & account checkup ----*/
   const ref = document.referrer ? new URL(document.referrer) : null;
   const homePath = ref ? ref.pathname === '/index' || ref.pathname === '/' : false;
   const home = document.getElementById('home'); 
@@ -34,11 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             document.body.style.display = 'flex';
         }
-    });    
-});
+    });
 
               /*---- feedback submission ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const pk = "X0R4eF9ReGNCNFBmZ0ZHU0I";
   const form = document.getElementById('form');
   const inputFields = form.querySelectorAll('input, select, textarea');
@@ -187,57 +186,55 @@ document.addEventListener('DOMContentLoaded', () => {
         formStatus.classList.add('unsuccessful');    
       });
   }
-});
 
+            /*-- Online/Offline status --*/
+  function updateStatusBar() {
+    const statusBar = document.getElementById('status-bar');
+    const statusBarIcons = document.getElementById('status-bar-icons');
+    const internet = document.getElementById('internet-img');
+    const noInternet = document.getElementById('no-internet-icon')
+    const msg = document.getElementById('internet-msg');
+    const logo = document.getElementById('logo');
 
-          /*-- Online/Offline status --*/
-function updateStatusBar() {
-  const statusBar = document.getElementById('status-bar');
-  const statusBarIcons = document.getElementById('status-bar-icons');
-  const internet = document.getElementById('internet-img');
-  const noInternet = document.getElementById('no-internet-icon')
-  const msg = document.getElementById('internet-msg');
-  const logo = document.getElementById('logo');
-
-  if (navigator.onLine) {
-    setTimeout(() => {
-      statusBar.style.display = 'none';
-      document.body.style.overflowY = 'scroll';
-    }, 1900);
-    setTimeout(() => {
-      statusBar.style.opacity = '0';
-    }, 1000);
-    statusBarIcons.style.borderColor = '#0ef';
-    internet.style.opacity = '1';
-    noInternet.style.opacity = '0';
-    msg.style.color = '#00cc00';
-    msg.textContent = 'Back Online'
-    logo.style.margin = '0';
-  } else {
-    setTimeout(() => {
-      statusBar.style.opacity = '1';
-      document.body.style.overflowY = 'hidden';
-    }, 50);
-    statusBar.style.display = 'grid';
-    statusBarIcons.style.borderColor = '#007bff';
-    internet.style.opacity = '0';
-    noInternet.style.opacity = '1';
-    msg.style.color = 'red';
-    msg.textContent = 'No Internet Connection!'
-    setTimeout(() => {
-      logo.style.margin = 'auto';
-    }, 500);
+    if (navigator.onLine) {
+      setTimeout(() => {
+        statusBar.style.display = 'none';
+        document.body.style.overflowY = 'scroll';
+      }, 1900);
+      setTimeout(() => {
+        statusBar.style.opacity = '0';
+      }, 1000);
+      statusBarIcons.style.borderColor = '#0ef';
+      internet.style.opacity = '1';
+      noInternet.style.opacity = '0';
+      msg.style.color = '#00cc00';
+      msg.textContent = 'Back Online'
+      logo.style.margin = '0';
+    } else {
+      setTimeout(() => {
+        statusBar.style.opacity = '1';
+        document.body.style.overflowY = 'hidden';
+      }, 50);
+      statusBar.style.display = 'grid';
+      statusBarIcons.style.borderColor = '#007bff';
+      internet.style.opacity = '0';
+      noInternet.style.opacity = '1';
+      msg.style.color = 'red';
+      msg.textContent = 'No Internet Connection!'
+      setTimeout(() => {
+        logo.style.margin = 'auto';
+      }, 500);
+    }
   }
-}
 
-window.addEventListener('online', updateStatusBar);
-window.addEventListener('offline', updateStatusBar);
+  window.addEventListener('online', updateStatusBar);
+  window.addEventListener('offline', updateStatusBar);
 
-document.addEventListener('DOMContentLoaded', updateStatusBar);
+  updateStatusBar();
 
         /*---- © current year ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const year = document.getElementById('current-year');
   const currentYear = new Date().getFullYear();
   year.textContent = currentYear;
-});
+
+}); // For dom load.

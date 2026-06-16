@@ -1103,7 +1103,7 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
   year.textContent = currentYear;
   
   
-}); // Dom content loaded listener ends here.
+}); // For dom load.
 
                /*---- page-refreshment ----*/
 window.addEventListener("pageshow", (event) => {
@@ -1180,4 +1180,4 @@ function updateStatusBar() {
 window.addEventListener('online', updateStatusBar);
 window.addEventListener('offline', updateStatusBar);
 
-} // For if (correctPath);
+} // For if (correctPath).

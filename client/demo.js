@@ -1,5 +1,6 @@
-                /*---- Home navigation & account checkup ----*/
 document.addEventListener('DOMContentLoaded', () => {
+
+           /*---- Home navigation & account checkup ----*/    
   document.body.style.display = 'flex';
   const ref = document.referrer ? new URL(document.referrer) : null;
   const homePath = ref ? ref.pathname === '/index' || ref.pathname === '/' : false;
@@ -13,10 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-});
 
             /*---- Rating system ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const ratingBox = document.getElementById('rating-container');
   const stars = document.querySelectorAll('.star');
   const faces = document.querySelectorAll('.face');
@@ -67,10 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
       ratingLabel.textContent = ratingOptions[index].label;
     });
   });
-});
 
               /*---- feedback submission ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const pk = "X0R4eF9ReGNCNFBmZ0ZHU0I";
   const form = document.getElementById('form');
   const inputFields = form.querySelectorAll('input, select, textarea');
@@ -80,10 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobInput = document.getElementById('inp_mob');
   const emailInput = document.getElementById('inp_email');
   
-  const ratingBox = document.getElementById('rating-container');
-  const stars = document.querySelectorAll('.star');
-  const faces = document.querySelectorAll('.face');
-  const ratingLabel = document.getElementById('rating-label');
   const rlText = ratingLabel.textContent;
  
   const com = document.getElementById('com');
@@ -281,7 +274,6 @@ document.addEventListener('DOMContentLoaded', () => {
       successBox.classList.remove('visible');
     }, 250);
   });
-});
 
 
           /*-- Online/Offline status --*/
@@ -327,11 +319,11 @@ function updateStatusBar() {
 window.addEventListener('online', updateStatusBar);
 window.addEventListener('offline', updateStatusBar);
 
-document.addEventListener('DOMContentLoaded', updateStatusBar);
+updateStatusBar();
 
         /*---- © current year ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const year = document.getElementById('current-year');
   const currentYear = new Date().getFullYear();
   year.textContent = currentYear;
-});
+
+}); // For dom load.

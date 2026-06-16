@@ -1,9 +1,10 @@
               /*---- Porting ----*/
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-     
-                /*---- Home navigation & account checkup ----*/
+
 document.addEventListener('DOMContentLoaded', () => {
+  
+                /*---- Home navigation & account checkup ----*/
   const ref = document.referrer ? new URL(document.referrer) : null;
   const homePath = ref ? ref.pathname === '/index' || ref.pathname === '/' : false;
   const homeBtns = document.querySelectorAll('#home, #success-home');
@@ -30,17 +31,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-    onAuthStateChanged(auth, (user) => {
-        if (!user) {
-            window.location.replace('/index.html?mode=login');
-        } else {
-            document.body.style.display = 'flex';
-        }
-    });
-});
+  onAuthStateChanged(auth, (user) => {
+      if (!user) {
+          window.location.replace('/index.html?mode=login');
+      } else {
+          document.body.style.display = 'flex';
+      }
+  });
 
             /*---- Rating system ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const ratingBox = document.getElementById('rating-container');
   const stars = document.querySelectorAll('.star');
   const faces = document.querySelectorAll('.face');
@@ -91,19 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
       ratingLabel.textContent = ratingOptions[index].label;
     });
   });
-});
 
               /*---- feedback submission ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const pk = "X0R4eF9ReGNCNFBmZ0ZHU0I";
   const form = document.getElementById('form');
   const inputFields = form.querySelectorAll('input, select, textarea');
   const nameInput = document.getElementById('inp_name');
   const emailInput = document.getElementById('inp_email');
-  const ratingBox = document.getElementById('rating-container');
-  const stars = document.querySelectorAll('.star');
-  const faces = document.querySelectorAll('.face');
-  const ratingLabel = document.getElementById('rating-label');
   const rlText = ratingLabel.textContent;
   const titleInput = document.getElementById('inp_title');
   const categoryOption = document.getElementById('opt_category');
@@ -301,7 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
       successBox.classList.remove('visible');
     }, 250);
   });
-});
 
 
           /*-- Online/Offline status --*/
@@ -347,11 +339,11 @@ function updateStatusBar() {
 window.addEventListener('online', updateStatusBar);
 window.addEventListener('offline', updateStatusBar);
 
-document.addEventListener('DOMContentLoaded', updateStatusBar);
+updateStatusBar();
 
         /*---- © current year ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const year = document.getElementById('current-year');
   const currentYear = new Date().getFullYear();
   year.textContent = currentYear;
-});
+  
+}); // For dom load.

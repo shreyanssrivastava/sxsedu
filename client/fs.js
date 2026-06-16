@@ -3,8 +3,9 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 
-              /*---- Home navigation & account checkup ----*/
 document.addEventListener('DOMContentLoaded', () => {
+
+              /*---- Home navigation & account checkup ----*/
   const ref = document.referrer ? new URL(document.referrer) : null;
   const homePath = ref ? ref.pathname === '/index' || ref.pathname === '/' : false;
   const home = document.getElementById('home');
@@ -36,19 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             document.body.style.display = 'flex';
         }
-    });    
-});
+    });
 
          /*---- Make inputs sensible ----*/
-document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('input').forEach(input => {
     input.setAttribute('spellcheck', 'false');
     input.setAttribute('autocomplete', 'off');
   });
-});
 
             /*---- inputs function ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const inputSlide = document.getElementById('input-slide');
  
   const nameInputBox = document.getElementById('name-box');
@@ -75,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const confirmBtn = document.getElementById('confirm-btn');
   const successSlide = document.getElementById('success-slide')
   const paymentId = document.getElementById('payment-id');
-  const ref = document.getElementById('ref');
+  const payCode = document.getElementById('payId-code');
   const expireSlide = document.getElementById('expire-slide')
   
   nameInput.addEventListener('input', function () {
@@ -307,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const random = Math.floor(100000 + Math.random() * 900000);
       paymentRef = `SE${random}P`;
       confirmTime = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString('en-GB');
-      ref.textContent = paymentRef;
+      payCode.textContent = paymentRef;
       paymentSlide.style.opacity = '0';
       loading.style.display = 'grid';
 
@@ -358,7 +355,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 2000);
     });
   });
-});
 
 let paymentRef = null;
 let confirmTime = null;
@@ -376,17 +372,14 @@ function formatIndianCurrency(amount) {
 }
 
            /*---- Receipt generation ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const receiptBtn = document.getElementById('receipt-btn');
-  const nameInput = document.getElementById('inp_name');
-  const amInput = document.getElementById('inp_am');
 
   receiptBtn.addEventListener('click', () => {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
     const logoURL = 'https://i.ibb.co/mv8T96b/sxs-logo.png';
-    const ref = paymentRef;
+    const payCode = paymentRef;
     const time = confirmTime;
     const name = nameInput.value.trim();
     const am = formatIndianCurrency(amInput.value.trim());
@@ -441,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
       theme: 'grid',
       head: [],
       body: [
-        ['Payment ID', ref],
+        ['Payment ID', payCode],
         ['Date & Time', time],
         ['Payee Name', name],
         ['Amount Paid', am],
@@ -508,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Save pdf with QR Code
     const qrContainer = document.createElement('div');
-    const qrData = `S² Education\nFee Payment Receipt\nPayment ID: ${ref}\nDate & Time: ${time}\nPayee Name: ${name}\nAmount Paid: ${am}\nThanks For Trusting Us!`;
+    const qrData = `S² Education\nFee Payment Receipt\nPayment ID: ${payCode}\nDate & Time: ${time}\nPayee Name: ${name}\nAmount Paid: ${am}\nThanks For Trusting Us!`;
     const qr = new qrcode(0, 'L');
     qr.addData(qrData);
     qr.make();
@@ -534,7 +527,6 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('pdf downloaded, but QR will not available.');
     }
   });
-});
    
          /*-- Online/Offline status --*/
 function updateStatusBar() {
@@ -579,11 +571,11 @@ function updateStatusBar() {
 window.addEventListener('online', updateStatusBar);
 window.addEventListener('offline', updateStatusBar);
 
-document.addEventListener('DOMContentLoaded', updateStatusBar);
+updateStatusBar();
 
         /*---- © current year ----*/
-document.addEventListener('DOMContentLoaded', () => {
   const year = document.getElementById('current-year');
   const currentYear = new Date().getFullYear();
   year.textContent = currentYear;
-});
+
+}); // For dom load.

@@ -1,11 +1,10 @@
               /*---- Porting ----*/
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
-     
-     
-            /*---- initial content loading ----*/
+          
 document.addEventListener('DOMContentLoaded', () => {
- 
+
+            /*---- initial content loading ----*/ 
   const pageC = document.getElementById('page-content');
   const pageSk = document.getElementById('page-sk');
   const minT = 1000;
@@ -1193,4 +1192,4 @@ window.embeddedChatbotConfig = {
   year.textContent = currentYear;
 
   
-}); // Dom load listener ends here.
+}); // For dom load.
