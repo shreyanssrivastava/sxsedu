@@ -538,7 +538,7 @@ complexQuery();
     });
   }
     
-  onAuthStateChanged(auth, (user) => {
+  const checkUser = onAuthStateChanged(auth, (user) => {
      if (user) {
         isUser = true;
         console.log(JSON.stringify(user));
@@ -587,6 +587,8 @@ complexQuery();
              login.style.display = 'flex';           
          }
      }
+     
+     checkUser();
   });
 
   function initGoogleSign() {
@@ -607,7 +609,7 @@ complexQuery();
     signInWithCredential(auth, credential)
     .then((result) => {
       console.log(result);
-      location.reload();
+      afterLogin();
     })
     .catch((error) => {
       console.log("Sign in failed:", error);
@@ -689,11 +691,11 @@ complexQuery();
     signInWithPopup(auth, provider)
       .then((result) => {
    
-        const user = result.user;
+     //   const user = result.user;
         console.log(result);
-        name.textContent = user.displayName;                                                            
-        email.textContent = user.email;
-        image.src = user.photoURL;
+    //    name.textContent = user.displayName;                                                            
+    //    email.textContent = user.email;
+     //   image.src = user.photoURL;
         
      //   const photoUrl = user.photoURL;
       //  console.log(photoUrl);
