@@ -580,10 +580,10 @@ complexQuery();
          pfBox.style.display = 'none';
          accBox.style.display = 'flex';
          plusEls.forEach((el) => el.style.display = 'none');             
+         initGoogleSign();
          if (mode && mode === 'login') {
              account.classList.add('show');
-         } else { 
-             initGoogleSign();
+         } else {
              login.style.display = 'flex';           
          }
      }
