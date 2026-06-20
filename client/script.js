@@ -407,7 +407,7 @@ async function findUser() {
 }
 
 findUser();
-*/
+
 
 async function complexQuery() {
   const q = query(
@@ -426,7 +426,7 @@ async function complexQuery() {
 }
 
 complexQuery();
-
+*/
 
 
 
@@ -690,23 +690,8 @@ complexQuery();
   document.getElementById("google-btn").addEventListener("click", (e) => {
     signInWithPopup(auth, provider)
       .then((result) => {
-   
-     //   const user = result.user;
         console.log(result);
-    //    name.textContent = user.displayName;                                                            
-    //    email.textContent = user.email;
-     //   image.src = user.photoURL;
-        
-     //   const photoUrl = user.photoURL;
-      //  console.log(photoUrl);
-              afterLogin();
-        //    window.location.replace('/');
-     //   if (photoUrl && photoUrl.includes("i.ibb.co")) {
-   //         console.log('already stored in imgbb');
-    //        location.reload();
-   //     } else {
-          //  updateUserProfileWithNewImage(user, user.photoURL);
-    //    }
+        afterLogin();
       })
       .catch((error) => {
         console.error(error);
@@ -788,13 +773,11 @@ function handleAuthError(error) {
             logStatus.textContent = 'Email not verified! Please check your inbox and verify.';
             signOut(auth);
         } else {
-            //alert(userCredential.user);
             console.log("Login successful");
             logStatus.style.display = 'none';
         }
         
           afterLogin();
- //       window.location.replace('/');
       })
       .catch((error) => {
         logStatus.textContent = handleAuthError(error);
