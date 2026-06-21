@@ -775,9 +775,8 @@ function handleAuthError(error) {
         } else {
             console.log("Login successful");
             logStatus.style.display = 'none';
+            afterLogin();
         }
-        
-          afterLogin();
       })
       .catch((error) => {
         logStatus.textContent = handleAuthError(error);
