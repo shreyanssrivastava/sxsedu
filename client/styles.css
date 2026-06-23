@@ -226,7 +226,7 @@ body {
   width: 0;
   opacity: 0;
   position: fixed; 
-  z-index: 99999; 
+  z-index: 99997; 
   top: 6.04rem; 
   left: 0; 
   bottom: 0;
@@ -393,7 +393,7 @@ body {
   backdrop-filter: blur(.3rem);
   background: rgba(0,0,0,0.4);
   transition: all .5s ease-in-out;
-  z-index: 99999;
+  z-index: 99997;
   overflow: hidden;
   transform: translateY(-100%);
   border-radius: 0 0 .8rem .8rem;
@@ -561,7 +561,39 @@ body {
   border: .01rem solid #fff;
   text-align: center;
 }
-
+        /*---- create-toast ----*/
+.toastify.toast {
+  z-index: 99999;
+  outline: none;
+  background: #ffffff;
+  border-radius: .7rem;
+  padding: .8rem 1rem;
+  border: .09rem solid;
+  transition: all .5s ease;
+  box-shadow: 0 .3rem .1rem rgba(128,128,128,0.1);
+  -webkit-tap-highlight-color: transparent;
+}
+.toastify.toast:hover {
+  scale: 1.05;
+}
+.toastify.success {
+  color: green;
+  border-color: green;
+}
+.toastify.error {
+  color: maroon;
+  border-color: maroon;
+}
+.toastify.load {
+  color: grey;
+  border-color: grey;
+}
+.toast-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .7rem;
+}
      /*---- Front-page ----*/
 #page-wrapper {
   display: block;
@@ -975,7 +1007,7 @@ h3 {
 #acc-box-bg {
   display: grid;
   position: fixed;
-  z-index: 100000;
+  z-index: 99998;
   left: 0;
   right: 0;
   bottom: 0;
@@ -1366,7 +1398,7 @@ form {
     margin-bottom: 1rem;
 }
 #danger-zone {
-    display: none;
+    display: grid;
     padding: 0;
     margin-top: 3rem;
     place-items: center;
