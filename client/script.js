@@ -288,6 +288,64 @@ function markAllNotificationsAsSeen() {
     window.location.href = '/cu.html';
   });
 
+           /*---- create-toast ----*/
+  let snack = null;
+  const base = {
+    className: "toast load",
+    duration: -1,
+    close: false,
+    gravity: "top",
+    position: "center",
+    offset: {
+        y: 75
+    },
+    escapeMarkup: false,
+    stopOnFocus: true
+  };
+
+  function serveToast(latest) {
+    if (snack) snack.hideToast();
+    snack = Toastify({
+      ...base,
+      ...latest
+    }).showToast();
+    
+    return snack;
+  }
+
+  const toast = {
+    success: (msg) => serveToast({
+      text: `
+        <div class="toast-content">
+          <i class="fa-regular fa-circle-check"></i>
+          <span>${msg}</span>
+        </div>
+      `,
+      duration: 5000,
+      className: "toast success"
+    }),
+    
+    error: (msg) => serveToast({
+      text: `
+        <div class="toast-content">
+          <i class="fa-regular fa-circle-xmark"></i>
+          <span>${msg}</span>
+        </div>
+      `,
+      duration: 5000,
+      className: "toast error"
+    }),
+    
+    promise: (msg) => serveToast({
+      text: `
+        <div class="toast-content">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          <span>${msg}</span>
+        </div>
+      `,
+    })
+  };
+
                 /*---- Sign In/Up ----*/
   const login = document.getElementById('login');
   const logIcon = document.getElementById('login-icon');
@@ -688,14 +746,15 @@ complexQuery();
 */
  
   document.getElementById("google-btn").addEventListener("click", (e) => {
-    signInWithPopup(auth, provider)
+      toast.promise("Processing...");
+      signInWithPopup(auth, provider)
       .then((result) => {
         console.log(result);
         afterLogin();
       })
       .catch((error) => {
         console.error(error);
-        logStatus.textContent = 'Some error occurred, please try again!';
+        toast.error(handleAuthError(error));
       });
   });
        
@@ -743,7 +802,7 @@ function handleAuthError(error) {
         return "For security reasons, please log in again.";
     }
     if (errorMessage.includes("popup-closed-by-user")) {
-        return "Popup closed before completing sign-in.";
+        return "Process closed before completing sign-in.";
     }
     if (errorMessage.includes("credential-already-in-use")) {
         return "This account is already linked to another sign-in method.";
@@ -766,20 +825,20 @@ function handleAuthError(error) {
   }  
        
   function loginUser(email, password) {
-    signInWithEmailAndPassword(auth, email, password)
+      toast.promise("Verifying credentials...");
+      signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         if (!user.emailVerified) {
-            logStatus.textContent = 'Email not verified! Please check your inbox and verify.';
+            toast.error("Email not verified! Please check your inbox and verify.");
             signOut(auth);
         } else {
-            console.log("Login successful");
-            logStatus.style.display = 'none';
+            toast.success("Login successful");
             afterLogin();
         }
       })
-      .catch((error) => {
-        logStatus.textContent = handleAuthError(error);
+      .catch((error) => {      
+          toast.error(handleAuthError(error));
       });
   }
   
