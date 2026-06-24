@@ -405,7 +405,6 @@ function markAllNotificationsAsSeen() {
   const frontBox = document.getElementById('front-box');
   const toggleBtn = document.getElementById('toggle-form');
   const signBox = document.getElementById('signup-box');
-  const signStatus = document.getElementById('sign-status');
   const logBox = document.getElementById('login-box');
   const pcMenu = document.getElementById('pc_menubar');
   const bellBox = document.getElementById('bell-box');
@@ -415,10 +414,8 @@ function markAllNotificationsAsSeen() {
   const logEmail = document.getElementById('inp_log_email');
   const logPw = document.getElementById('inp_log_pw');
   const forgot = document.getElementById('forgot');
-  const logStatus = document.getElementById('log-status');
   const fgBox = document.getElementById('forgot-box');
   const fgEmail = document.getElementById('inp_forgot_email');
-  const fgStatus = document.getElementById('forgot-status');
   const resetPwBtn = document.getElementById('resetPw-btn');
   const signBtn = document.getElementById("signup-btn");
   const signName = document.getElementById('inp_sign_name');
@@ -685,15 +682,16 @@ complexQuery();
   });
    
   resetPwBtn.addEventListener('click', () => {
+    toast.promise("Sending email...")
     sendEmail(fgEmail.value, 'reset')
     .then(() => {
-      fgStatus.textContent = 'If an account with that email exists, we’ve sent a password reset link.';
+      toast.success("If an account with that email exists, we’ve sent a password reset link.");
       setTimeout(() => {
           window.location.replace('/index.html?mode=login');
       }, 2000);
     })
     .catch((error) => {
-        fgStatus.textContent = handleAuthError(error);
+        toast.error(handleAuthError(error));
         console.error(error);
     });
   });
@@ -750,6 +748,7 @@ complexQuery();
       signInWithPopup(auth, provider)
       .then((result) => {
         console.log(result);
+        toast.success("Login successful");
         afterLogin();
       })
       .catch((error) => {
@@ -854,18 +853,19 @@ function handleAuthError(error) {
   
   async function signUpUser(email, password) {
     try {
+        toast.promise("Creating account...")
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const name = signName.value.trim();
         await updateProfile(user, { displayName: name });      
         await sendEmail(email, 'verify');
-        signStatus.textContent = "Verification link sent! Please check your email and verify your account before logging in."; 
+        toast.success("Verification link sent! Please check your email and verify your account before logging in."); 
         signOut(auth);
         setTimeout(() => {
           window.location.replace('/index.html?mode=login');
         }, 2000);
     } catch (error) {
-        signStatus.textContent = handleAuthError(error);
+        toast.error(handleAuthError(error));
     }
   }
 
@@ -880,10 +880,12 @@ function handleAuthError(error) {
     logOutBtn.addEventListener("click", () => {
       signOut(auth)
       .then(() => {
-          location.reload();
+          toast.success("Logging out...")
+          location.replace('/');
       })
       .catch((error) => {
           console.log(error);
+          toast.error(error);
       });
     });
 

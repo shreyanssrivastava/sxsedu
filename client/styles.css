@@ -565,6 +565,8 @@ body {
 .toastify.toast {
   z-index: 99999;
   outline: none;
+  width: fit-content;
+  max-width: 75vw;
   background: #ffffff;
   border-radius: .7rem;
   padding: .8rem 1rem;
@@ -1496,7 +1498,8 @@ form {
 
          /*---- Initial animation ----*/
 #initial-anime-bg {
-  display: grid;
+  dislay:  grid;
+  display: none;
   position: fixed;
   width: 100%;
   height: 100%;
