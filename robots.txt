@@ -1,0 +1,9 @@
+# robots.txt
+# © S² Education | All rights reserved
+
+User-agent: *
+Allow: /
+
+Disallow: /api/
+
+Sitemap: https://sxsedu.vercel.app/sitemap.xml
