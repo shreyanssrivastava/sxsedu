@@ -1498,8 +1498,7 @@ form {
 
          /*---- Initial animation ----*/
 #initial-anime-bg {
-  dislay:  grid;
-  display: none;
+  display:  grid;
   position: fixed;
   width: 100%;
   height: 100%;
