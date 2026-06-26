@@ -267,8 +267,22 @@ function markAllNotificationsAsSeen() {
    // pcDp.classList.add('hide');
     pcDp.style.display = 'none';
     menuBtn.classList.replace('hide', 'close-pf');
-  }); 
-            
+  });
+  
+  
+  const obsrvPf = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      const el = mutation.target;
+      if (el.classList.contains("show")) {
+          toast.error("This is an error toast!", {
+            duration: -1
+          });
+      } else {
+          snack.hideToast();
+      }
+    });
+  });
+
             /*---- page-navigation ----*/
   const home = document.getElementById('home');
   const fs = document.getElementById('fee-submission');
@@ -325,7 +339,7 @@ function markAllNotificationsAsSeen() {
       className: "toast success"
     }),
     
-    error: (msg) => serveToast({
+    error: (msg, changes) => serveToast({
       text: `
         <div class="toast-content">
           <i class="fa-regular fa-circle-xmark"></i>
@@ -333,7 +347,8 @@ function markAllNotificationsAsSeen() {
         </div>
       `,
       duration: 5000,
-      className: "toast error"
+      className: "toast error",
+      ...changes
     }),
     
     promise: (msg) => serveToast({
@@ -426,6 +441,7 @@ function markAllNotificationsAsSeen() {
   const image = document.querySelectorAll('#dp, #pc-dp, #pf-pic');
   const pfName = document.getElementById('inp_pf_name');
   const pfEmail = document.getElementById('inp_pf_email');
+  const pfEmailCheck = document.getElementById('pf-email-check');
   const pfPhone = document.getElementById('inp_pf_phone');
 
   let isUser = false;
@@ -596,6 +612,20 @@ complexQuery();
   const checkUser = onAuthStateChanged(auth, (user) => {
      if (user) {
         isUser = true;
+        
+        if (!user.emailVerified) {
+        //    toast.error("Please verify your email!");
+            pfEmailCheck.classList.replace('fa-circle-check', 'fa-circle-xmark');
+            obsrvPf.observe(navbar, {
+              attributes: true,
+              attributeFilter: ["class"]
+            });
+            obsrvPf.observe(account, {
+              attributes: true,
+              attributeFilter: ["class"]
+            });
+        }
+        
         console.log(JSON.stringify(user));
       //  fetchAllUsers(user.uid);
         accBox.style.display = 'none';
@@ -860,10 +890,10 @@ function handleAuthError(error) {
         await updateProfile(user, { displayName: name });      
         await sendEmail(email, 'verify');
         toast.success("Verification link sent! Please check your email and verify your account before logging in."); 
-        signOut(auth);
-        setTimeout(() => {
-          window.location.replace('/index.html?mode=login');
-        }, 2000);
+     //   signOut(auth);
+      //  setTimeout(() => {
+    //      window.location.replace('/index.html?mode=login');
+     //   }, 2000);
     } catch (error) {
         toast.error(handleAuthError(error));
     }

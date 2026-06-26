@@ -328,20 +328,20 @@
      </div>
      <input id="inp_pf_photo" type="file" accept="image/png, image/jpeg, image/jpg" disabled>
      <input id="inp_pf_name" type="text" placeholder="Enter your name" disabled>
-     <input id="inp_pf_email" type="text" placeholder="Email Address" disabled>
-     <input id="inp_pf_phone" type="tel" placeholder="Phone Number" disabled>
-     <i class="fa-solid fa-user-gear"></i>
+     <div class="pf-email-box">
+       <input id="inp_pf_email" type="text" placeholder="Email Address" disabled>
+       <i id="pf-email-check" class="fa-solid fa-circle-check"></i>
+     </div>
+     <input id="inp_pf_phone" type="tel" placeholder="Phone Number" disabled>    
+     <button id="pf-btn">
+       <span>Edit</span>
+       <span>Save</span>
+       <div id="pf-btn-slider"></div>
+     </button>
      <div id="danger-zone">
        <button id="logout-btn">Log Out</button>
        <button id="update-pw">Update Password</button> 
        <button id="delete-acc">Delete Account</button>
-     </div>
-     <div class="pf-btn-box">
-       <button id="pf-btn">
-         <span>Edit</span>
-         <span>Save</span>
-         <div id="pf-btn-slider"></div>
-       </button>
      </div>
    </div>
    
