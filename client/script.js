@@ -234,7 +234,8 @@ function markAllNotificationsAsSeen() {
   const menuIcon = document.getElementById("menu-icon");
   const pcDp = document.getElementById('pc-dp-box');
   const openPf = document.getElementById('open-profile');
-  const account = document.getElementById('acc-box-bg'); 
+  const account = document.getElementById('acc-box-bg');
+  const tagline = document.getElementById('tagline');
 
   menuBtn.addEventListener('click', function() {
     const active = this.classList.contains('active');
@@ -268,18 +269,30 @@ function markAllNotificationsAsSeen() {
     pcDp.style.display = 'none';
     menuBtn.classList.replace('hide', 'close-pf');
   });
-  
-  
+
   const obsrvPf = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
-      const el = mutation.target;
-      if (el.classList.contains("show")) {
-          toast.error("This is an error toast!", {
-            duration: -1
-          });
-      } else {
-          snack.hideToast();
+      const el = mutation.target;      
+      if (el === navbar && el.classList.contains("show")) {
+          setTimeout(() => {
+            tagline.classList.add('space-for-toast');
+            toast.warn("Please verify your email to complete account setup");
+          }, 1000);
       }
+      
+      if (el === account) {
+          if (el.classList.contains("show")) {
+              toast.warn("Please verify your email to complete account setup", {
+                className: "warn acc"             
+              });
+              
+              setTimeout(() => {
+                snack.toastElement.style.color = 'red';
+              }, 2000);
+          } else {
+              toast.warn("Please verify your email to complete account setup");
+          }
+      }      
     });
   });
 
@@ -305,7 +318,7 @@ function markAllNotificationsAsSeen() {
            /*---- create-toast ----*/
   let snack = null;
   const base = {
-    className: "toast load",
+    className: "load",
     duration: -1,
     close: false,
     gravity: "top",
@@ -323,7 +336,7 @@ function markAllNotificationsAsSeen() {
       ...base,
       ...latest
     }).showToast();
-    
+
     return snack;
   }
 
@@ -336,7 +349,7 @@ function markAllNotificationsAsSeen() {
         </div>
       `,
       duration: 5000,
-      className: "toast success"
+      className: "success"
     }),
     
     error: (msg, changes) => serveToast({
@@ -347,10 +360,21 @@ function markAllNotificationsAsSeen() {
         </div>
       `,
       duration: 5000,
-      className: "toast error",
+      className: "error",
       ...changes
     }),
     
+    warn: (msg, changes) => serveToast({
+      text: `
+        <div class="toast-content">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span>${msg}</span>
+        </div>
+      `,
+      className: "warn",
+      ...changes
+    }),
+
     promise: (msg) => serveToast({
       text: `
         <div class="toast-content">
@@ -614,13 +638,12 @@ complexQuery();
         isUser = true;
         
         if (!user.emailVerified) {
-        //    toast.error("Please verify your email!");
-            pfEmailCheck.classList.replace('fa-circle-check', 'fa-circle-xmark');
+            pfEmailCheck.classList.replace('fa-circle-check', 'fa-circle-exclamation');
             obsrvPf.observe(navbar, {
               attributes: true,
               attributeFilter: ["class"]
             });
-            obsrvPf.observe(account, {
+             obsrvPf.observe(account, {
               attributes: true,
               attributeFilter: ["class"]
             });
@@ -889,11 +912,10 @@ function handleAuthError(error) {
         const name = signName.value.trim();
         await updateProfile(user, { displayName: name });      
         await sendEmail(email, 'verify');
-        toast.success("Verification link sent! Please check your email and verify your account before logging in."); 
-     //   signOut(auth);
-      //  setTimeout(() => {
-    //      window.location.replace('/index.html?mode=login');
-     //   }, 2000);
+        toast.success("Verification link sent! Check your email and verify your account to access all features"); 
+        setTimeout(() => {
+          window.location.replace('/');
+        }, 2000);
     } catch (error) {
         toast.error(handleAuthError(error));
     }
