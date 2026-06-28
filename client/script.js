@@ -285,10 +285,6 @@ function markAllNotificationsAsSeen() {
               toast.warn("Please verify your email to complete account setup", {
                 className: "warn acc"             
               });
-              
-              setTimeout(() => {
-                snack.toastElement.style.color = 'red';
-              }, 2000);
           } else {
               toast.warn("Please verify your email to complete account setup");
           }
@@ -1029,6 +1025,15 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
         console.error("Error:", error);
     }
   }
+  
+  // onHover over error icon in profile email ↓
+  pfEmailCheck.addEventListener('mouseenter', () => {
+      snack.toastElement.classList.add('alert');
+  });
+  
+  pfEmailCheck.addEventListener('mouseleave', () => {
+      snack.toastElement.classList.remove('alert');
+  });
   
   // Update user password & delete account ↓
   

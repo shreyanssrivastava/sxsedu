@@ -575,9 +575,6 @@ body {
   box-shadow: 0 .3rem .1rem rgba(128,128,128,0.1);
   -webkit-tap-highlight-color: transparent;
 }
-.kohli {
-  color: red;
-}
 .toastify:hover {
   scale: 1.05;
 }
@@ -602,6 +599,11 @@ body {
 }
 .toastify.warn.acc {
   z-index: 99999;
+}
+.toastify.warn.alert {
+  color: #ff3333;
+  scale: 1.08;
+  border-color: #ff0000;
 }
 .toast-content {
   display: flex;
