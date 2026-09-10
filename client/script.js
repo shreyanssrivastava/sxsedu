@@ -1183,7 +1183,7 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
     domain: "www.chatbase.co"
   }
     
- const userName = "Shreyans";
+ const userName = "S S";
  setTimeout(() => {
    if (userName && window.chatbase && window.chatbase.setInitialMessages) {
      window.chatbase.setInitialMessages([
