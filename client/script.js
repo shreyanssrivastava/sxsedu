@@ -1164,18 +1164,7 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
   updateStatusBar();
-
 
          /*---- chatbase.co ----*/
   window.embeddedChatbotConfig = {
