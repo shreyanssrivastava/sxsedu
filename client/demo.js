@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
   homeBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       if (homePath) {
-          history.back(); // Go back if possible (acts like pressing the Back button)
+          history.back();
       } else {
-          location.replace('/'); // Fallback in case history is not available
+          location.replace('/');
       }
     });
   });
