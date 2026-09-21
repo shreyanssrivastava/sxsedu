@@ -1214,9 +1214,7 @@ window.addEventListener("load", () => {
       if (slider.scrollWidth <= slider.clientWidth) {
           slider.style.justifyContent = "center";  // Center when not overflowing
       }
-    });  // else {
-   //     boxes.style.justifyContent = "flex-start"; // Normal scrolling
-  //  }
+    });
 });
 
               /*-- Online/Offline status --*/
