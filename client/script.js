@@ -765,7 +765,7 @@ complexQuery();
     if (!file) return;
 
     const formData = new FormData();
-    formData.append("key", "d8e4ccd142ddf84767dac0474af959ea"); // Replace with your Imgbb API Key
+    formData.append("key", "d8e4ccd142ddf84767dac0474af959ea");
     formData.append("image", file);
 
     try {
