@@ -784,6 +784,7 @@ complexQuery();
             console.error("Upload Failed:", data);
         }
     } catch (error) {
+        toast.error(error);
         console.error("Error:", error);
     }
   });
