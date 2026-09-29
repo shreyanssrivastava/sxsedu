@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let timerInterval;
   let remainingTime = 0;
   let startTime = 0;
-  const timerDuration = 2 * 60; // Set timer duration here (e.g., 2 minutes)
+  const timerDuration = 2 * 60;
 
   function startTimer(duration) {
     // Check if there's any saved time in localStorage, else start fresh
