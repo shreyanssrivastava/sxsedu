@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const timerDuration = 2 * 60;
 
   function startTimer(duration) {
-    // Check if there's any saved time in localStorage, else start fresh
+    // Check if there's any saved time in localStorage, else start fresh...
     if (localStorage.getItem('cGF5bWVudF90aW1lcg==')) {
         remainingTime = parseInt(localStorage.getItem('cGF5bWVudF90aW1lcg=='));
     } else {
