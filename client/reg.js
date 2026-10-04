@@ -918,11 +918,11 @@ function printForm() {
     const greenTextY = greenBoxY + (greenBoxHeight + 14 * 0.352777778) / 2;
     doc.text(greenText, greenTextX, greenTextY);
 
-    // photo
+    // Students photo
     const imgX = doc.internal.pageSize.getWidth() - 60; // Adjust this for exact placement
     const imgY = greenBoxY + greenBoxHeight + 5; // Top margin
-    const imgWidth = 35; // Image width
-    const imgHeight = 35; // Image height
+    const imgWidth = 35;
+    const imgHeight = 35;
 
     if (photoBase64) {
       doc.setFillColor(200, 200, 200);
