@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { label: 'Poor', color: '#e67e22' },     // Orange
     { label: 'Average', color: '#f1c40f' }, // Yellow
     { label: 'Good', color: '#2ecc71' },    // Green
-    { label: 'Excellent', color: '#3498db' } // #3498db Blue
+    { label: 'Excellent', color: '#3498db' } // Blue
   ];
 
   stars.forEach((star, index) => {
