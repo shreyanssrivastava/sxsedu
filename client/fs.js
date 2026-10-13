@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     startTime = Date.now(); // Mark the start time
 
     timerInterval = setInterval(function() {
-      const elapsedTime = Math.floor((Date.now() - startTime) / 1000); // Calculate elapsed time
+      const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
 
         // Update remaining time based on elapsed time
       remainingTime = Math.max(0, duration - elapsedTime);
