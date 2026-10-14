@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     clearInterval(timerInterval); // Clear any previous intervals
 
-    startTime = Date.now(); // Mark the start time
+    startTime = Date.now();
 
     timerInterval = setInterval(function() {
       const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
