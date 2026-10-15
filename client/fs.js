@@ -281,7 +281,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (checked) {
       checkboxError.style.display = 'none';
-  //    declarationCheckBtn.style.marginBottom = '2.5rem';
       checkBox.classList.remove('invalid');
       checkBox.classList.add('valid');
     } else {
