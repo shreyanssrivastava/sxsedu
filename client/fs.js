@@ -251,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Save remaining time to localStorage every second
       localStorage.setItem('cGF5bWVudF90aW1lcg==', remainingTime);
 
-        // Timer expiry condition
       if (remainingTime <= 0) {
         clearInterval(timerInterval);
         handleTimerExpiry();
