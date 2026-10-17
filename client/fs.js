@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         remainingTime = duration;
     }
 
-    clearInterval(timerInterval); // Clear any previous intervals
+    clearInterval(timerInterval);
 
     startTime = Date.now();
 
