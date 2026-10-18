@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("Payment session expired!");
   }
 
-  // This function will be called to initiate the timer
+  // Function to initiate the timer
   function initiateTimer() {
     localStorage.removeItem('cGF5bWVudF90aW1lcg=='); // Reset the stored time when initiating a new timer
     startTimer(timerDuration); // Start the timer from fresh state
