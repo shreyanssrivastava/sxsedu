@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Function to initiate the timer
   function initiateTimer() {
-    localStorage.removeItem('cGF5bWVudF90aW1lcg=='); // Reset the stored time when initiating a new timer
+    localStorage.removeItem('cGF5bWVudF90aW1lcg=='); // Reset stored time
     startTimer(timerDuration); // Start the timer from fresh state
   }
   
