@@ -226,6 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   emailjs.init(atob(pk));
   
+  // Send feedback
   function sendFeedback() {
     const fullName = nameInput.value.trim();
     const name = fullName.split(' ')[0] || 'User';
