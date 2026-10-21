@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-              /*---- feedback submission ----*/
+              /*---- feedback-submission ----*/
   const pk = "X0R4eF9ReGNCNFBmZ0ZHU0I";
   const form = document.getElementById('form');
   const inputFields = form.querySelectorAll('input, select, textarea');
