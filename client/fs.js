@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-           /*---- payment checkBox ----*/
+           /*---- payment-checkBox ----*/
   function paymentIsChecked() {
     return checkBox.classList.contains('btn-checked');
   }
