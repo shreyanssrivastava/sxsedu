@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return isNameValid;
   }
 
+  // Validate Amount
   function validateAm() {
     const am = amInput.value.trim();
     let isAmValid = false;
