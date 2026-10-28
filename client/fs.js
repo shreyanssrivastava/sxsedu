@@ -185,7 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const isNameValid = validateName();
     const isAmValid = validateAm();
-  
+
+    // Format User Name  
     function shortName(name) {
       const shortedName = name.length > 20 ? `${name.substring(0, 20)}...` : name;
       return shortedName;
