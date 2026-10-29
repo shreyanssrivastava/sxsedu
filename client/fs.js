@@ -191,7 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const shortedName = name.length > 20 ? `${name.substring(0, 20)}...` : name;
       return shortedName;
     }
-  
+    
+    // Check for valid form data
     if (isNameValid && isAmValid) {
       const name = nameInput.value.trim();
       const am = amInput.value.trim();
