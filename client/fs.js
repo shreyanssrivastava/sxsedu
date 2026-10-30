@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update remaining time based on elapsed time
       remainingTime = Math.max(0, duration - elapsedTime);
 
-        // Update the timer display
+        // Update the timer duration
       const minutes = Math.floor(remainingTime / 60);
       const seconds = remainingTime % 60;
       const display = document.getElementById('timer');
