@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
         remainingTime = duration;
     }
 
-    clearInterval(timerInterval);
+    clearInterval(timerInterval); // clear current Interval
 
     startTime = Date.now();
 
