@@ -222,7 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   });
 
-
   let timerInterval;
   let remainingTime = 0;
   let startTime = 0;
