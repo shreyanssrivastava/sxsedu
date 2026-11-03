@@ -16,8 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         location.replace('/');
     }
   });
-  
-   
+
   const firebaseConfig = {
     apiKey: "AIzaSyDjcYwQSstXZPf3ratDeYHJvgYiLdpc4JU",
     authDomain: "sxs-education.firebaseapp.com",
