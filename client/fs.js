@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     validateAm();
   });
 
-  // Validate Name
+  // Validate Name of Student
   function validateName() {
     const name = nameInput.value.trim();
     const pattern = /^[A-Za-z]+(?: [A-Za-z]+)*\s*$/;
